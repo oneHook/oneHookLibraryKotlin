@@ -1,5 +1,6 @@
 package com.onehook.onhooklibrarykotlin.app
 
+import android.graphics.Color
 import android.graphics.Rect
 import android.os.Bundle
 import android.widget.FrameLayout
@@ -12,6 +13,8 @@ open class OHActivity : AppCompatActivity() {
     var safeArea = Rect()
         private set
     var disableBackButton: Boolean = false
+
+    private var isWindowReady: Boolean = false
 
     lateinit var view: FrameLayout
         private set
@@ -31,8 +34,16 @@ open class OHActivity : AppCompatActivity() {
         window.decorView.setOnApplyWindowInsetsListener { _, insets ->
             safeArea.top = insets.stableInsetTop
             safeArea.bottom = insets.stableInsetBottom
+            if(isWindowReady.not()) {
+                isWindowReady = true
+                onWindowReady()
+            }
             insets
         }
+    }
+
+    open fun onWindowReady() {
+
     }
 
     override fun onDestroy() {

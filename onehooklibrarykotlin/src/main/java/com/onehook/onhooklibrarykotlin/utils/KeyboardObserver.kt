@@ -19,6 +19,7 @@ class KeyboardObserver(activity: AppCompatActivity) {
 
     val keyboardHeight: BehaviorRelay<Int>
     val keyboardVisible: BehaviorRelay<Boolean>
+    val keyboardOffset: BehaviorRelay<Int>
 
     init {
         context = activity
@@ -28,6 +29,7 @@ class KeyboardObserver(activity: AppCompatActivity) {
             .getInt(KEY_KEYBOARD_HEIGHT, dpToPx(240))
         keyboardHeight = BehaviorRelay.createDefault(stored)
         keyboardVisible = BehaviorRelay.createDefault(false)
+        keyboardOffset = BehaviorRelay.createDefault(0)
 
         activity.window.decorView
             .findViewById<View>(android.R.id.content)
@@ -37,18 +39,20 @@ class KeyboardObserver(activity: AppCompatActivity) {
             when {
                 lastHeight == 0 -> lastHeight = rect.height()
                 diff > minKeyboardHeight -> {
-                    if (keyboardVisible.value == false) {
-                        keyboardVisible.accept(true)
-                    }
                     if (diff != keyboardHeight.value) {
                         keyboardHeight.accept(diff)
                         context?.getPreferences(Activity.MODE_PRIVATE)?.edit()
                             ?.putInt(KEY_KEYBOARD_HEIGHT, diff)?.apply()
                     }
+                    if (keyboardVisible.value == false) {
+                        keyboardVisible.accept(true)
+                        keyboardOffset.accept(keyboardHeight.value)
+                    }
                 }
                 else -> {
                     if (keyboardVisible.value == true) {
                         keyboardVisible.accept(false)
+                        keyboardOffset.accept(0)
                     }
                     lastHeight = rect.height()
                 }

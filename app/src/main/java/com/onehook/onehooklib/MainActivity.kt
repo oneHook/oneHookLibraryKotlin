@@ -10,7 +10,10 @@ class MainActivity : OHActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+    }
 
+    override fun onWindowReady() {
+        super.onWindowReady()
         view.setBackgroundColor(Color.GRAY)
         setRootViewController(DashboardViewController())
     }
