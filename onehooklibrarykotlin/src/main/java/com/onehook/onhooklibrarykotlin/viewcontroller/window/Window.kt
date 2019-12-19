@@ -1,11 +1,11 @@
 package com.onehook.onhooklibrarykotlin.viewcontroller.window
 
-import com.onehook.onhooklibrarykotlin.app.OneHookActivity
+import com.onehook.onhooklibrarykotlin.app.OHActivity
 import com.onehook.onhooklibrarykotlin.viewcontroller.controller.ViewController
 import com.onehook.onhooklibrarykotlin.viewcontroller.host.ControllerHost
 import com.onehook.onhooklibrarykotlin.viewcontroller.presentation.PresentingAnimation
 
-class Window(activity: OneHookActivity) : ControllerHost(activity = activity) {
+class Window(activity: OHActivity) : ControllerHost(activity = activity) {
 
     fun setRootViewController(
         controller: ViewController

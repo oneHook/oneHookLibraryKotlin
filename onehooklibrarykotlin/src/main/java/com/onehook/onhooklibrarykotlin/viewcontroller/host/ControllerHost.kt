@@ -12,7 +12,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.widget.FrameLayout
 import androidx.core.view.GestureDetectorCompat
-import com.onehook.onhooklibrarykotlin.app.OneHookActivity
+import com.onehook.onhooklibrarykotlin.app.OHActivity
 import com.onehook.onhooklibrarykotlin.utils.weak
 import com.onehook.onhooklibrarykotlin.viewcontroller.controller.ViewController
 import com.onehook.onhooklibrarykotlin.viewcontroller.presentation.PresentationStyle
@@ -24,7 +24,7 @@ interface OnOutsideClickListener {
     fun onOutsideClicked()
 }
 
-open class ControllerHost(activity: OneHookActivity) : FrameLayout(activity) {
+open class ControllerHost(activity: OHActivity) : FrameLayout(activity) {
 
     private var disappearRatio: Float = 0.1f
     private var dimRatio: Float = 0.5f
@@ -33,7 +33,7 @@ open class ControllerHost(activity: OneHookActivity) : FrameLayout(activity) {
     private var controllers = ArrayList<ViewController>()
     var onOutsideClickListener: OnOutsideClickListener? by weak()
 
-    var activity: OneHookActivity? by weak()
+    var activity: OHActivity? by weak()
         private set
 
     init {
@@ -66,7 +66,7 @@ open class ControllerHost(activity: OneHookActivity) : FrameLayout(activity) {
     /**
      * Add to the bottom of view controller stack. NO animation.
      */
-    fun addBottom(viewController: ViewController, activity: OneHookActivity) {
+    fun addBottom(viewController: ViewController, activity: OHActivity) {
         if (viewControllers.any { it.tag == viewController.tag }) {
             /* only allow unique tag */
             return
@@ -99,7 +99,7 @@ open class ControllerHost(activity: OneHookActivity) : FrameLayout(activity) {
      */
     fun push(
         viewController: ViewController,
-        activity: OneHookActivity,
+        activity: OHActivity,
         animated: Boolean,
         completion: (() -> Unit)?
     ) {

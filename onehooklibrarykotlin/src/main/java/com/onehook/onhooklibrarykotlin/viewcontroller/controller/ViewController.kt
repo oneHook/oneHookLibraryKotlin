@@ -6,7 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.onehook.onhooklibrarykotlin.app.OneHookActivity
+import com.onehook.onhooklibrarykotlin.app.OHActivity
 import com.onehook.onhooklibrarykotlin.utils.weak
 import com.onehook.onhooklibrarykotlin.viewcontroller.presentation.PresentationStyle
 import com.onehook.onhooklibrarykotlin.viewcontroller.utils.annotation.ViewRes
@@ -27,8 +27,8 @@ abstract class ViewController {
     val view: View
         get() = _view!!
 
-    private var _activity: OneHookActivity? by weak()
-    val activity: OneHookActivity
+    private var _activity: OHActivity? by weak()
+    val activity: OHActivity
         get() = _activity!!
     val context: Context
         get() = _activity!!
@@ -105,7 +105,7 @@ abstract class ViewController {
 
     /* Internal Methods */
 
-    open fun doCreateView(container: ViewGroup, activity: OneHookActivity) {
+    open fun doCreateView(container: ViewGroup, activity: OHActivity) {
         _activity = activity
         _view = onCreateView(LayoutInflater.from(container.context), container)
         viewDidLoad(view)

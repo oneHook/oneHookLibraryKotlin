@@ -1,13 +1,17 @@
 package com.onehook.onhooklibrarykotlin.app
 
+import android.graphics.Rect
 import android.os.Bundle
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.onehook.onhooklibrarykotlin.viewcontroller.window.Window
 
-open class OneHookActivity : AppCompatActivity() {
+open class OHActivity : AppCompatActivity() {
 
-    open var disableBackButton: Boolean = false
+    var safeArea = Rect()
+        private set
+    var disableBackButton: Boolean = false
+
     lateinit var view: FrameLayout
         private set
 
@@ -22,6 +26,12 @@ open class OneHookActivity : AppCompatActivity() {
         supportRequestWindowFeature(android.view.Window.FEATURE_NO_TITLE)
         view = FrameLayout(this)
         setContentView(view)
+
+        window.decorView.setOnApplyWindowInsetsListener { _, insets ->
+            safeArea.top = insets.stableInsetTop
+            safeArea.bottom = insets.stableInsetBottom
+            insets
+        }
     }
 
     override fun onDestroy() {
