@@ -1,4 +1,4 @@
-package com.onehook.onhooklibrarykotlin.viewcontroller.utils.annotation
+package com.onehook.onhooklibrarykotlin.view
 
 import androidx.annotation.IntegerRes
 

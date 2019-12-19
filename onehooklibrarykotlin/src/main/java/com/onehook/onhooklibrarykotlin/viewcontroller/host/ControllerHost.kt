@@ -13,11 +13,11 @@ import android.view.View
 import android.widget.FrameLayout
 import androidx.core.view.GestureDetectorCompat
 import com.onehook.onhooklibrarykotlin.app.OHActivity
+import com.onehook.onhooklibrarykotlin.utils.AnimationEndListener
 import com.onehook.onhooklibrarykotlin.utils.weak
 import com.onehook.onhooklibrarykotlin.viewcontroller.controller.ViewController
 import com.onehook.onhooklibrarykotlin.viewcontroller.presentation.PresentationStyle
 import com.onehook.onhooklibrarykotlin.viewcontroller.presentation.PresentingAnimation
-import com.onehook.onhooklibrarykotlin.viewcontroller.utils.animation.AnimationEndListener
 import kotlin.math.max
 
 interface OnOutsideClickListener {
@@ -113,7 +113,7 @@ open class ControllerHost(activity: OHActivity) : FrameLayout(activity) {
         printStack()
         transactionInProgress = true
         viewController.doCreateView(container = this, activity = activity)
-        var layoutParams = LayoutParams(viewController.view.layoutParams).apply {
+        val layoutParams = LayoutParams(viewController.view.layoutParams).apply {
             if (viewController.presentationStyle.fullscreen.not()) {
                 marginStart = viewController.presentationStyle.minimumSideMargin
                 marginEnd = viewController.presentationStyle.minimumSideMargin

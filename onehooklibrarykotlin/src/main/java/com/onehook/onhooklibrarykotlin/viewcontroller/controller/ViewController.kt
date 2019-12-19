@@ -8,8 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import com.onehook.onhooklibrarykotlin.app.OHActivity
 import com.onehook.onhooklibrarykotlin.utils.weak
+import com.onehook.onhooklibrarykotlin.view.MATCH_PARENT
 import com.onehook.onhooklibrarykotlin.viewcontroller.presentation.PresentationStyle
-import com.onehook.onhooklibrarykotlin.viewcontroller.utils.annotation.ViewRes
+import com.onehook.onhooklibrarykotlin.view.ViewRes
 import kotlin.reflect.KMutableProperty
 import kotlin.reflect.full.findAnnotation
 import kotlin.reflect.full.memberProperties
@@ -108,6 +109,9 @@ abstract class ViewController {
     open fun doCreateView(container: ViewGroup, activity: OHActivity) {
         _activity = activity
         _view = onCreateView(LayoutInflater.from(container.context), container)
+        if (_view?.layoutParams == null) {
+            _view?.layoutParams = ViewGroup.LayoutParams(MATCH_PARENT, MATCH_PARENT)
+        }
         viewDidLoad(view)
         if (verbose) {
             Log.i("oneHook", "${javaClass.simpleName} ($tag) CREATE VIEW")

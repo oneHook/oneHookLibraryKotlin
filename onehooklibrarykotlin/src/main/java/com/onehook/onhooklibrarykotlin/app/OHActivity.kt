@@ -4,6 +4,7 @@ import android.graphics.Rect
 import android.os.Bundle
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
+import com.onehook.onhooklibrarykotlin.viewcontroller.controller.ViewController
 import com.onehook.onhooklibrarykotlin.viewcontroller.window.Window
 
 open class OHActivity : AppCompatActivity() {
@@ -46,5 +47,9 @@ open class OHActivity : AppCompatActivity() {
         if (!controllerWindow.onBackPressed()) {
             super.onBackPressed()
         }
+    }
+
+    fun setRootViewController(viewController: ViewController) {
+        controllerWindow.setRootViewController(controller = viewController)
     }
 }
