@@ -14,7 +14,7 @@ class KeyboardObserver(activity: AppCompatActivity) {
 
     private var rect = Rect()
     private var lastHeight: Int = 0
-    private var minKeyboardHeight = dpToPx(150)
+    private var minKeyboardHeight = dp(150)
     private var context: AppCompatActivity? by weak()
 
     val keyboardHeight: BehaviorRelay<Int>
@@ -26,7 +26,7 @@ class KeyboardObserver(activity: AppCompatActivity) {
         /* if we never stored any keyboard height, we "guess" roughly what it will be
          * only for the first time */
         val stored = activity.getPreferences(Activity.MODE_PRIVATE)
-            .getInt(KEY_KEYBOARD_HEIGHT, dpToPx(240))
+            .getInt(KEY_KEYBOARD_HEIGHT, dp(240))
         keyboardHeight = BehaviorRelay.createDefault(stored)
         keyboardVisible = BehaviorRelay.createDefault(false)
         keyboardOffset = BehaviorRelay.createDefault(0)
