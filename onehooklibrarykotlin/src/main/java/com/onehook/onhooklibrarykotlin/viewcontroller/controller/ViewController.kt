@@ -16,7 +16,7 @@ import kotlin.reflect.full.findAnnotation
 import kotlin.reflect.full.memberProperties
 import kotlin.reflect.jvm.isAccessible
 
-abstract class ViewController {
+open class ViewController {
 
     companion object {
         var verbose: Boolean = true
@@ -46,7 +46,9 @@ abstract class ViewController {
 
     /* Child must override */
 
-    abstract fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View
+    open fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
+        return EDView(this)
+    }
 
     open fun viewDidLoad(view: View) {
         if (verbose) {
@@ -104,6 +106,17 @@ abstract class ViewController {
         }
     }
 
+    open fun viewWillLayoutSubviews() {
+        if (verbose) {
+            Log.i("oneHook", "${javaClass.simpleName} ($tag) VIEW WILL LAYOUT SUBVIEWS")
+        }
+    }
+    open fun viewDidLayoutSubviews() {
+        if (verbose) {
+            Log.i("oneHook", "${javaClass.simpleName} ($tag) VIEW DID LAYOUT SUBVIEWS")
+        }
+    }
+
     /* Internal Methods */
 
     open fun doCreateView(container: ViewGroup, activity: OHActivity) {
@@ -155,5 +168,16 @@ abstract class ViewController {
 
     open fun dismiss(animated: Boolean, completion: (() -> Unit)? = null) {
         activity.controllerWindow.pop(animated = animated, completion = completion)
+    }
+}
+
+/**
+ * ViewGroup subclass that works with ViewController to notify
+ * controller when layout is needed.
+ */
+class EDView(private val viewController: ViewController): ViewGroup(viewController.activity) {
+    override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
+        viewController.viewWillLayoutSubviews()
+        viewController.viewDidLayoutSubviews()
     }
 }
