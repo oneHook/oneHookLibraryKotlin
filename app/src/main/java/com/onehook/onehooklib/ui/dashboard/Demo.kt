@@ -37,7 +37,7 @@ fun View.layout(x: Int, y: Int, width: Int, height: Int) {
 
 
 
-class DashboardViewController : BaseViewController() {
+class DemoViewController : BaseViewController() {
 
     private val editText: AppCompatEditText by lazy {
         AppCompatEditText(context).apply {
