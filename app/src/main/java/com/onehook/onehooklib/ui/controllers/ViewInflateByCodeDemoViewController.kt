@@ -7,12 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.LinearLayout
+import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatImageView
-import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.view.setPadding
 import com.onehook.onehooklib.ui.reusable.BaseViewController
 import com.onehook.onehooklib.ui.reusable.LargeTextView
+import com.onehook.onhooklibrarykotlin.graphics.DrawableFactory
 import com.onehook.onhooklibrarykotlin.utils.dp
-import com.onehook.onhooklibrarykotlin.utils.dpf
 import com.onehook.onhooklibrarykotlin.view.LP
 import com.onehook.onhooklibrarykotlin.view.MATCH_PARENT
 
@@ -53,6 +54,20 @@ class ViewInflateByCodeDemoViewController : BaseViewController() {
                     }.linearLayoutLp()
                     text = "WRAP|CENTER"
                     setBackgroundColor(Color.GRAY)
+                })
+
+                addView(AppCompatButton(context).apply {
+                    layoutParams = LP().apply {
+                        topMargin = dp(20)
+                        layoutGravity = Gravity.CENTER_HORIZONTAL
+                    }.linearLayoutLp()
+                    setPadding(dp(10))
+                    text = "Click Me"
+                    background =
+                        DrawableFactory.roundedRippleDrawable(
+                            Color.YELLOW,
+                            Color.GRAY
+                        )
                 })
             })
         }

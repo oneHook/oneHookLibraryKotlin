@@ -5,13 +5,13 @@ import android.graphics.Color
 import android.graphics.Rect
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.AppCompatTextView
-import androidx.core.view.setPadding
+import android.widget.FrameLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.onehook.onehooklib.ui.controllers.ViewInflateByCodeDemoViewController
 import com.onehook.onehooklib.ui.controllers.ViewInflateByXmlDemoViewController
 import com.onehook.onehooklib.ui.reusable.LargeTextView
 import com.onehook.onehooklib.ui.reusable.MediumTextView
+import com.onehook.onhooklibrarykotlin.graphics.DrawableFactory
 import com.onehook.onhooklibrarykotlin.utils.dp
 import com.onehook.onhooklibrarykotlin.view.LP
 import com.onehook.onhooklibrarykotlin.view.MATCH_PARENT
@@ -39,13 +39,22 @@ private class SectionCell(context: Context) : LargeTextView(context) {
     }
 }
 
-private class ItemCell(context: Context) : MediumTextView(context) {
+private class ItemCell(context: Context) : FrameLayout(context) {
+
+    val titleLabel: MediumTextView by lazy {
+        MediumTextView(context).apply {
+            letterSpacing = 0.1f
+            setPadding(dp(10), dp(15), dp(10), dp(15))
+        }
+    }
+
     init {
         layoutParams = LP().apply {
             width = MATCH_PARENT
         }
-        letterSpacing = 0.1f
-        setPadding(dp(10), dp(15), dp(10), dp(15))
+        addView(titleLabel)
+        val drawable = DrawableFactory.backgroundRippleDrawable(Color.WHITE, Color.GRAY)
+        background = drawable
     }
 }
 
@@ -115,7 +124,7 @@ class MenuViewController : LinearRecyclerViewController() {
                     }
                     else -> {
                         val menuItem = item as? MenuItem
-                        (view as? ItemCell)?.text = menuItem?.title ?: ""
+                        (view as? ItemCell)?.titleLabel?.text = menuItem?.title ?: ""
                         view.setOnClickListener {
                             menuItem?.action?.invoke()?.also {
                                 navigationController?.push(it, true)
