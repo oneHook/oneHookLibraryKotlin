@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.onehook.onehooklib.ui.controllers.ViewInflateByCodeDemoViewController
+import com.onehook.onehooklib.ui.controllers.ViewInflateByManualCodeDemoViewController
 import com.onehook.onehooklib.ui.controllers.ViewInflateByXmlDemoViewController
 import com.onehook.onehooklib.ui.reusable.LargeTextView
 import com.onehook.onehooklib.ui.reusable.MediumTextView
@@ -75,6 +76,12 @@ class MenuViewController : LinearRecyclerViewController() {
                 title = "By Xml",
                 subtitle = null,
                 action = { ViewInflateByXmlDemoViewController() })
+        )
+        items.add(
+            MenuItem(
+                title = "By Code Without Auto Layout",
+                subtitle = null,
+                action = { ViewInflateByManualCodeDemoViewController() })
         )
     }
 

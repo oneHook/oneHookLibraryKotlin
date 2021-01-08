@@ -61,6 +61,14 @@ fun EXACTLY(dimension: Int): Int {
     return View.MeasureSpec.makeMeasureSpec(dimension, View.MeasureSpec.EXACTLY)
 }
 
+fun EXACTLY(dimension: Float): Int {
+    return View.MeasureSpec.makeMeasureSpec(dimension.toInt(), View.MeasureSpec.EXACTLY)
+}
+
 fun AT_MOST(dimension: Int): Int {
     return View.MeasureSpec.makeMeasureSpec(dimension, View.MeasureSpec.AT_MOST)
+}
+
+fun AT_MOST(dimension: Float): Int {
+    return View.MeasureSpec.makeMeasureSpec(dimension.toInt(), View.MeasureSpec.AT_MOST)
 }
