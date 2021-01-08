@@ -41,13 +41,15 @@ open class NavigationController(root: ViewController) : ViewController() {
     }
 
     fun push(viewController: ViewController, animated: Boolean) {
-        viewController.navigationController = this
-        controllerHost?.push(
-            viewController = viewController,
-            activity = activity,
-            animated = animated,
-            completion = null
-        )
+        view.post {
+            viewController.navigationController = this
+            controllerHost?.push(
+                viewController = viewController,
+                activity = activity,
+                animated = animated,
+                completion = null
+            )
+        }
     }
 
     fun popViewController(animated: Boolean) {

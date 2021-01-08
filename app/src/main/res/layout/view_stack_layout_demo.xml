@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#FFFFFF"
+    android:orientation="vertical">
+
+    <com.onehook.onhooklibrarykotlin.widget.StackLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        app:orientation="vertical"
+        app:spacing="15dp"
+        app:childGravity="left_or_top"
+        app:gravity="left_or_top"
+        android:background="@color/colorPrimary">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5px"
+            android:layout_gravity="top|fill_horizontal"
+            android:text="Title"
+            android:textSize="50dp">
+        </androidx.appcompat.widget.AppCompatTextView>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:layout_marginStart="20dp"
+            android:text="Subtitle"
+            android:textSize="50dp">
+        </androidx.appcompat.widget.AppCompatTextView>
+
+    </com.onehook.onhooklibrarykotlin.widget.StackLayout>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

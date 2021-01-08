@@ -104,6 +104,7 @@ open class ControllerHost(activity: OHActivity) : FrameLayout(activity) {
         completion: (() -> Unit)?
     ) {
         if (transactionInProgress) {
+            Log.d("XXX", "ignored")
             return
         }
         if (viewControllers.any { it.tag == viewController.tag }) {

@@ -2,14 +2,17 @@ package com.onehook.onehooklib.ui.dashboard
 
 import android.graphics.Color
 import android.graphics.Rect
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.RecyclerView
+import com.onehook.onehooklib.ui.controllers.StackLayoutDemoViewController
 import com.onehook.onhooklibrarykotlin.utils.dp
 import com.onehook.onhooklibrarykotlin.view.MATCH_PARENT
 import com.onehook.onhooklibrarykotlin.viewcontroller.controller.LinearRecyclerViewController
 import com.onehook.onhooklibrarykotlin.viewcontroller.controller.SimpleAdapter
+import com.onehook.onhooklibrarykotlin.widget.StackLayout
 
 class MenuViewController : LinearRecyclerViewController() {
 
@@ -58,6 +61,15 @@ class MenuViewController : LinearRecyclerViewController() {
                 return 6
             }
         }
+    }
+
+    override fun viewDidAppear(animated: Boolean) {
+        super.viewDidAppear(animated)
+        val controller = StackLayoutDemoViewController()
+        navigationController?.push(
+            viewController = controller,
+            animated = true
+        )
     }
 
     override fun viewWillLayoutSubviews() {

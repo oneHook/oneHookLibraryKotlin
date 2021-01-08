@@ -39,7 +39,7 @@ open class ViewController {
         get() = _isVisible
 
     var presentationStyle = PresentationStyle()
-    var tag: String? = null
+    var tag: String = javaClass.name
 
     val res: Resources
         get() = _activity!!.resources

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="ViewInfo">
+        <attr name="android:layout_margin" format="dimension" />
+        <attr name="android:layout_marginStart" format="dimension" />
+        <attr name="android:layout_marginEnd" format="dimension" />
+        <attr name="android:layout_marginTop" format="dimension" />
+        <attr name="android:layout_marginBottom" format="dimension" />
+        <attr name="android:layout_gravity" format="flags">
+            <flag name="top" value="0x30" />
+            <flag name="bottom" value="0x50" />
+            <flag name="left" value="0x03" />
+            <flag name="right" value="0x05" />
+            <flag name="center_vertical" value="0x10" />
+            <flag name="fill_vertical" value="0x70" />
+            <flag name="center_horizontal" value="0x01" />
+            <flag name="fill_horizontal" value="0x07" />
+            <flag name="center" value="0x11" />
+            <flag name="fill" value="0x77" />
+            <flag name="clip_vertical" value="0x80" />
+            <flag name="clip_horizontal" value="0x08" />
+            <flag name="start" value="0x00800003" />
+            <flag name="end" value="0x00800005" />
+        </attr>
+    </declare-styleable>
+
+    <!-- Stack Layout Attributes -->
+
+    <declare-styleable name="StackLayout">
+        <attr name="orientation" format="enum">
+            <enum name="horizontal" value="0" />
+            <enum name="vertical" value="1" />
+        </attr>
+        <attr name="gravity" format="enum">
+            <enum name="left_or_top" value="0" />
+            <enum name="center" value="1" />
+            <enum name="right_or_bottom" value="2" />
+        </attr>
+        <attr name="childGravity" format="enum">
+            <enum name="left_or_top" value="0" />
+            <enum name="center" value="1" />
+            <enum name="right_or_bottom" value="2" />
+        </attr>
+        <attr name="spacing" format="dimension" />
+    </declare-styleable>
+
+</resources>
