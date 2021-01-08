@@ -1,7 +1,6 @@
 package com.onehook.onehooklib.ui.controllers
 
 import android.graphics.Color
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -10,14 +9,13 @@ import android.widget.FrameLayout
 import android.widget.LinearLayout
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
-import com.onehook.onehooklib.R
 import com.onehook.onehooklib.ui.reusable.BaseViewController
 import com.onehook.onhooklibrarykotlin.utils.dp
 import com.onehook.onhooklibrarykotlin.utils.dpf
 import com.onehook.onhooklibrarykotlin.view.LP
 import com.onehook.onhooklibrarykotlin.view.MATCH_PARENT
 
-class StackLayoutDemoViewController: BaseViewController() {
+class ViewInflateByCodeDemoViewController : BaseViewController() {
 
     private val contentView: ViewGroup by lazy {
         FrameLayout(context).apply {
@@ -62,7 +60,6 @@ class StackLayoutDemoViewController: BaseViewController() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
-//        return inflater.inflate(R.layout.view_stack_layout_demo, container, false)
         return contentView
     }
 

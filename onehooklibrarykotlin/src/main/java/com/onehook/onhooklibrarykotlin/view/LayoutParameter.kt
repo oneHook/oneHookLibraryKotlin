@@ -17,6 +17,7 @@ class LP : ViewGroup.LayoutParams(WRAP_CONTENT, WRAP_CONTENT) {
     var marginTop: Int
     var marginBottom: Int
     var layoutGravity: Int
+    var layoutWeight: Float
 
     var margin: Int = 0
         set(newValue) {
@@ -35,12 +36,14 @@ class LP : ViewGroup.LayoutParams(WRAP_CONTENT, WRAP_CONTENT) {
         marginTop = 0
         marginBottom = 0
         layoutGravity = 0
+        layoutWeight = 0f
     }
 
     fun linearLayoutLp(): LinearLayout.LayoutParams {
         return LinearLayout.LayoutParams(width, height).also {
             it.setMargins(marginStart, marginTop, marginEnd, marginBottom)
             it.gravity = layoutGravity
+            it.weight = layoutWeight
         }
     }
 
