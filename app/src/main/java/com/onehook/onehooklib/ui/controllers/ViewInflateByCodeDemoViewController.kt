@@ -10,6 +10,7 @@ import android.widget.LinearLayout
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import com.onehook.onehooklib.ui.reusable.BaseViewController
+import com.onehook.onehooklib.ui.reusable.LargeTextView
 import com.onehook.onhooklibrarykotlin.utils.dp
 import com.onehook.onhooklibrarykotlin.utils.dpf
 import com.onehook.onhooklibrarykotlin.view.LP
@@ -38,20 +39,18 @@ class ViewInflateByCodeDemoViewController : BaseViewController() {
                 }.frameLayoutLp()
                 orientation = LinearLayout.VERTICAL
                 setBackgroundColor(Color.RED)
-                addView(AppCompatTextView(context).apply {
+                addView(LargeTextView(context).apply {
                     layoutParams = LP().apply {
                         width = MATCH_PARENT
                         margin = dp(10)
                     }.linearLayoutLp()
-                    textSize = dpf(8)
                     text = "MATCH PARENT"
                     setBackgroundColor(Color.GREEN)
                 })
-                addView(AppCompatTextView(context).apply {
+                addView(LargeTextView(context).apply {
                     layoutParams = LP().apply {
                         layoutGravity = Gravity.CENTER_HORIZONTAL
                     }.linearLayoutLp()
-                    textSize = dpf(8)
                     text = "WRAP|CENTER"
                     setBackgroundColor(Color.GRAY)
                 })

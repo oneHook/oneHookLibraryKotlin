@@ -6,9 +6,12 @@ import android.graphics.Rect
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.view.setPadding
 import androidx.recyclerview.widget.RecyclerView
 import com.onehook.onehooklib.ui.controllers.ViewInflateByCodeDemoViewController
 import com.onehook.onehooklib.ui.controllers.ViewInflateByXmlDemoViewController
+import com.onehook.onehooklib.ui.reusable.LargeTextView
+import com.onehook.onehooklib.ui.reusable.MediumTextView
 import com.onehook.onhooklibrarykotlin.utils.dp
 import com.onehook.onhooklibrarykotlin.view.LP
 import com.onehook.onhooklibrarykotlin.view.MATCH_PARENT
@@ -24,26 +27,24 @@ private data class MenuItem(
     val action: () -> ViewController
 ) : Item
 
-private class SectionCell(context: Context) : AppCompatTextView(context) {
+private class SectionCell(context: Context) : LargeTextView(context) {
     init {
         layoutParams = LP().apply {
             width = MATCH_PARENT
         }
         letterSpacing = 0.1f
-        textSize = 14f
         setTextColor(Color.WHITE)
         setPadding(dp(10), dp(15), dp(10), dp(15))
         setBackgroundColor(Color.DKGRAY)
     }
 }
 
-private class ItemCell(context: Context) : AppCompatTextView(context) {
+private class ItemCell(context: Context) : MediumTextView(context) {
     init {
         layoutParams = LP().apply {
             width = MATCH_PARENT
         }
         letterSpacing = 0.1f
-        textSize = 12f
         setPadding(dp(10), dp(15), dp(10), dp(15))
     }
 }
