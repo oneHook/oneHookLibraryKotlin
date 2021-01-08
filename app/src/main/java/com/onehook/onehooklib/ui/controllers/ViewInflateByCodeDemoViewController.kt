@@ -26,7 +26,7 @@ class ViewInflateByCodeDemoViewController : BaseViewController() {
                     height = dp(150)
                     setBackgroundColor(Color.BLUE)
                     layoutGravity = Gravity.CENTER
-                    marginBottom = dp(150)
+                    bottomMargin = dp(150)
                 }.frameLayoutLp()
             })
 
@@ -34,7 +34,7 @@ class ViewInflateByCodeDemoViewController : BaseViewController() {
                 layoutParams = LP().apply {
                     width = MATCH_PARENT
                     layoutGravity = Gravity.BOTTOM
-                    marginBottom = activity.safeArea.bottom
+                    bottomMargin = activity.safeArea.bottom
                 }.frameLayoutLp()
                 orientation = LinearLayout.VERTICAL
                 setBackgroundColor(Color.RED)

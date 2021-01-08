@@ -2,11 +2,6 @@
 <resources>
 
     <declare-styleable name="ViewInfo">
-        <attr name="android:layout_margin" format="dimension" />
-        <attr name="android:layout_marginStart" format="dimension" />
-        <attr name="android:layout_marginEnd" format="dimension" />
-        <attr name="android:layout_marginTop" format="dimension" />
-        <attr name="android:layout_marginBottom" format="dimension" />
         <attr name="android:layout_weight" format="float"/>
         <attr name="android:layout_gravity" format="flags">
             <flag name="top" value="0x30" />

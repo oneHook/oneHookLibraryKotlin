@@ -13,29 +13,21 @@ import com.onehook.onhooklibrarykotlin.R
 const val MATCH_PARENT = -1
 const val WRAP_CONTENT = -2
 
-class LP : ViewGroup.LayoutParams {
+class LP : ViewGroup.MarginLayoutParams {
 
-    var marginStart: Int
-    var marginEnd: Int
-    var marginTop: Int
-    var marginBottom: Int
     var layoutGravity: Int
     var layoutWeight: Float
 
     var margin: Int = 0
         set(newValue) {
             field = newValue
-            marginStart = newValue
-            marginEnd = newValue
-            marginTop = newValue
-            marginBottom = newValue
+            leftMargin = newValue
+            rightMargin = newValue
+            topMargin = newValue
+            bottomMargin = newValue
         }
 
     init {
-        marginStart = 0
-        marginEnd = 0
-        marginTop = 0
-        marginBottom = 0
         layoutGravity = 0
         layoutWeight = 0f
     }
@@ -46,36 +38,20 @@ class LP : ViewGroup.LayoutParams {
 
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
         val a = context.obtainStyledAttributes(attrs, R.styleable.ViewInfo)
-        val margin =
-            a.getDimension(R.styleable.ViewInfo_android_layout_margin, 0f)
-        margin.toInt().also {
-            marginStart = it
-            marginEnd = it
-            marginTop = it
-            marginBottom = it
-        }
-        marginStart =
-            a.getDimension(R.styleable.ViewInfo_android_layout_marginStart, margin).toInt()
-        marginEnd = a.getDimension(R.styleable.ViewInfo_android_layout_marginEnd, margin).toInt()
-        marginTop = a.getDimension(R.styleable.ViewInfo_android_layout_marginTop, margin).toInt()
-        marginBottom =
-            a.getDimension(R.styleable.ViewInfo_android_layout_marginBottom, margin).toInt()
         layoutGravity = a.getInteger(R.styleable.ViewInfo_android_layout_gravity, 0)
         layoutWeight = a.getFloat(R.styleable.ViewInfo_android_layout_weight, 0.0f)
         a.recycle()
     }
 
     fun linearLayoutLp(): LinearLayout.LayoutParams {
-        return LinearLayout.LayoutParams(width, height).also {
-            it.setMargins(marginStart, marginTop, marginEnd, marginBottom)
+        return LinearLayout.LayoutParams(this).also {
             it.gravity = layoutGravity
             it.weight = layoutWeight
         }
     }
 
     fun frameLayoutLp(): FrameLayout.LayoutParams {
-        return FrameLayout.LayoutParams(width, height).also {
-            it.setMargins(marginStart, marginTop, marginEnd, marginBottom)
+        return FrameLayout.LayoutParams(this).also {
             it.gravity = layoutGravity
         }
     }
