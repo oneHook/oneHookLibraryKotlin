@@ -5,13 +5,10 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import androidx.annotation.AttrRes
-import androidx.core.view.marginBottom
 import androidx.core.view.marginStart
-import androidx.core.view.marginTop
-import androidx.core.view.updateMargins
 import com.onehook.onhooklibrarykotlin.R
+import com.onehook.onhooklibrarykotlin.view.LP
 import com.onehook.onhooklibrarykotlin.view.WRAP_CONTENT
 import kotlin.math.max
 import kotlin.math.min
@@ -142,44 +139,15 @@ open class StackLayout : ViewGroup {
 
 
     override fun generateLayoutParams(p: LayoutParams?): LayoutParams {
-        Log.d("XXX", "generateLayoutParams called")
-        return super.generateLayoutParams(p)
+        return LP(p?.width ?: WRAP_CONTENT, p?.height ?: WRAP_CONTENT)
     }
 
     override fun generateLayoutParams(attrs: AttributeSet?): LayoutParams {
-        Log.d("XXX", "generateLayoutParams attr called ${attrs}")
-        val lp = LinearLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT)
-        return MarginLayoutParams(WRAP_CONTENT, WRAP_CONTENT).apply {
-
-            val a = context.obtainStyledAttributes(attrs, R.styleable.ViewInfo)
-            val margin =
-                a.getDimension(R.styleable.ViewInfo_android_layout_margin, 0f)
-            margin.toInt().also {
-                updateMargins(left = it, top = it, right = it, bottom = it)
-            }
-            val marginStart = a.getDimension(R.styleable.ViewInfo_android_layout_margin, margin)
-            val marginEnd = a.getDimension(R.styleable.ViewInfo_android_layout_margin, margin)
-            val marginTop = a.getDimension(R.styleable.ViewInfo_android_layout_margin, margin)
-            val marginBottom = a.getDimension(R.styleable.ViewInfo_android_layout_margin, margin)
-            val gravity = a.getInt(R.styleable.ViewInfo_android_layout_gravity, 0)
-
-            Log.d(
-                "XXX",
-                "try margin ${margin}, margin start ${marginStart}, gravity ${gravity}"
-            )
-//            val xmlProvidedSize =
-//                attrs?.getAttributeValue("http://schemas.android.com/apk/res/android", "layout_marginStart")
-
-            Log.d("XXX", "${attrs?.attributeCount}")
-            val m = attrs?.getAttributeIntValue(android.R.attr.layout_margin, -1) ?: 0
-            val ms = attrs?.getAttributeIntValue(android.R.attr.layout_marginStart, -1) ?: 0
-            Log.d("XXX", "${m}, ${ms}")
-        }
+        return LP(context, attrs)
     }
 
     override fun generateDefaultLayoutParams(): LayoutParams {
-        Log.d("XXX", "generateDefaultLayoutParams called")
-        return MarginLayoutParams(WRAP_CONTENT, WRAP_CONTENT)
+        return LP()
     }
 
     private fun resolveMeasureSpec(wanted: Int, measureSpec: Int): Int {
