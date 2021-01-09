@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:orientation="vertical">
+
+    <com.onehook.onhooklibrarykotlin.widget.StackLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        app:childGravity="left_or_top"
+        app:gravity="left_or_top"
+        app:orientation="horizontal"
+        app:spacing="15dp">
+
+        <com.onehook.onhooklibrarykotlin.widget.CircleImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:srcCompat="@mipmap/ic_launcher" />
+
+        <com.onehook.onhooklibrarykotlin.widget.CircleImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:srcCompat="@mipmap/ic_launcher" />
+
+        <com.onehook.onhooklibrarykotlin.widget.CircleImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:srcCompat="@mipmap/ic_launcher" />
+
+    </com.onehook.onhooklibrarykotlin.widget.StackLayout>
+
+    <com.onehook.onhooklibrarykotlin.widget.StackLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        app:childGravity="left_or_top"
+        app:gravity="left_or_top"
+        app:orientation="horizontal"
+        app:spacing="-15dp">
+
+        <com.onehook.onhooklibrarykotlin.widget.CircleImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:srcCompat="@mipmap/ic_launcher" />
+
+        <com.onehook.onhooklibrarykotlin.widget.CircleImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:srcCompat="@mipmap/ic_launcher" />
+
+        <com.onehook.onhooklibrarykotlin.widget.CircleImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:srcCompat="@mipmap/ic_launcher" />
+
+    </com.onehook.onhooklibrarykotlin.widget.StackLayout>
+
+    <com.onehook.onhooklibrarykotlin.widget.StackLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        app:childGravity="right_or_bottom"
+        app:gravity="left_or_top"
+        app:orientation="horizontal"
+        app:spacing="-15dp">
+
+        <com.onehook.onhooklibrarykotlin.widget.CircleImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="20dp"
+            app:srcCompat="@mipmap/ic_launcher" />
+
+        <com.onehook.onhooklibrarykotlin.widget.CircleImageView
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            app:srcCompat="@mipmap/ic_launcher" />
+
+        <com.onehook.onhooklibrarykotlin.widget.CircleImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:srcCompat="@mipmap/ic_launcher" />
+
+    </com.onehook.onhooklibrarykotlin.widget.StackLayout>
+
+    <com.onehook.onhooklibrarykotlin.widget.StackLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        app:childGravity="left_or_top"
+        app:gravity="left_or_top"
+        app:orientation="vertical"
+        app:spacing="15dp">
+
+        <com.onehook.onhooklibrarykotlin.widget.CircleImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:srcCompat="@mipmap/ic_launcher" />
+
+        <com.onehook.onhooklibrarykotlin.widget.CircleImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:srcCompat="@mipmap/ic_launcher" />
+
+        <com.onehook.onhooklibrarykotlin.widget.CircleImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:srcCompat="@mipmap/ic_launcher" />
+
+    </com.onehook.onhooklibrarykotlin.widget.StackLayout>
+
+    <com.onehook.onhooklibrarykotlin.widget.StackLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        app:childGravity="left_or_top"
+        app:gravity="left_or_top"
+        app:orientation="vertical"
+        app:spacing="-15dp">
+
+        <com.onehook.onhooklibrarykotlin.widget.CircleImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:srcCompat="@mipmap/ic_launcher" />
+
+        <com.onehook.onhooklibrarykotlin.widget.CircleImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:srcCompat="@mipmap/ic_launcher" />
+
+        <com.onehook.onhooklibrarykotlin.widget.CircleImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:srcCompat="@mipmap/ic_launcher" />
+
+    </com.onehook.onhooklibrarykotlin.widget.StackLayout>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

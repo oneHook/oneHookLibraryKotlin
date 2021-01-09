@@ -2,7 +2,7 @@
 <resources>
 
     <declare-styleable name="ViewInfo">
-        <attr name="android:layout_weight" format="float"/>
+        <attr name="android:layout_weight" format="float" />
         <attr name="android:layout_gravity" format="flags">
             <flag name="top" value="0x30" />
             <flag name="bottom" value="0x50" />
@@ -39,6 +39,15 @@
             <enum name="right_or_bottom" value="2" />
         </attr>
         <attr name="spacing" format="dimension" />
+    </declare-styleable>
+
+    <!--    Circle Image View -->
+
+    <declare-styleable name="CircleImageView">
+        <attr name="civ_border_width" format="dimension" />
+        <attr name="civ_border_color" format="color" />
+        <attr name="civ_border_overlay" format="boolean" />
+        <attr name="civ_circle_background_color" format="color" />
     </declare-styleable>
 
 </resources>
