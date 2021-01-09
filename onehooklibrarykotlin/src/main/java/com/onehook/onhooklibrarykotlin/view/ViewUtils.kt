@@ -1,6 +1,7 @@
 package com.onehook.onhooklibrarykotlin.view
 
 import android.content.Context
+import android.graphics.Rect
 import android.graphics.drawable.Drawable
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -8,6 +9,10 @@ import androidx.appcompat.widget.AppCompatTextView
 
 fun View.setFrame(x: Int, y: Int, width: Int, height: Int) {
     layout(x, y, x + width, y + height)
+}
+
+fun View.setFrame(frame: Rect) {
+    layout(frame.left, frame.top, frame.right, frame.bottom)
 }
 
 fun AppCompatTextView.setDrawable(

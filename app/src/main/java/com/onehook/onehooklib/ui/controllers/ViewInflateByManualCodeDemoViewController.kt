@@ -2,17 +2,15 @@ package com.onehook.onehooklib.ui.controllers
 
 import android.animation.Animator
 import android.animation.AnimatorSet
-import android.animation.TypeEvaluator
-import android.animation.ValueAnimator
 import android.graphics.Color
 import android.graphics.Rect
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.Animation
 import com.onehook.onehooklib.ui.reusable.BaseViewController
 import com.onehook.onehooklib.ui.reusable.LargeTextView
 import com.onehook.onehooklib.ui.reusable.RoundedSolidButton
+import com.onehook.onhooklibrarykotlin.animation.frameAnimation
 import com.onehook.onhooklibrarykotlin.utils.dp
 import com.onehook.onhooklibrarykotlin.view.EXACTLY
 import com.onehook.onhooklibrarykotlin.view.setFrame
@@ -70,80 +68,25 @@ class ViewInflateByManualCodeDemoViewController : BaseViewController() {
         updateButton.setFrame(
             (view.width - updateButton.measuredWidth) / 2,
             (view.height - updateButton.measuredHeight - activity.safeArea.bottom),
-            dp(200),
-            dp(50)
+            updateButton.measuredWidth,
+            updateButton.measuredHeight
         )
     }
 
     private fun animateViews() {
         val views = arrayListOf<View>(view1, view2)
+        val animations = arrayListOf<Animator>()
         views.forEach { child ->
             val x = Random.nextInt(0, view.width / 2)
             val y = Random.nextInt(0, view.height / 2)
-            val width = Random.nextInt(dp(50), dp(300))
-            val height = Random.nextInt(dp(50), dp(300))
-
-            val a = ValueAnimator.ofObject(
-                RectEvaluator(),
-                Rect(child.left, child.top, child.right, child.bottom),
-                Rect(x, y, x + width, y + height)
-            )
-            a.duration = 200
-            println("XXX start from ${child.width} ${child.height}")
-            println("XXX final target ${width} ${height}")
-            a.addUpdateListener {
-                val rect = it.animatedValue as Rect
-                println("XXX ${it.animatedFraction} ${rect.width()} ${rect.height()}")
-                child.measure(EXACTLY(rect.width()), EXACTLY(rect.height()))
-                child.setFrame(rect.left, rect.top, rect.width(), rect.height())
-            }
-
-            a.start()
-
-//            val rect = Rect(x, y, x + width, y + height)
-//            child.measure(EXACTLY(rect.width()), EXACTLY(rect.height()))
-//            child.setFrame(rect.left, rect.top, rect.width(), rect.height())
-            return
+            val width = child.measuredWidth
+            val height = child.measuredHeight
+//            val width = Random.nextInt(dp(50), dp(300))
+//            val height = Random.nextInt(dp(50), dp(300))
+            animations.add(child.frameAnimation(Rect(x, y, x + width, y + height)))
         }
+        val aset = AnimatorSet()
+        aset.playSequentially(animations)
+        aset.start()
     }
 }
-
-class RectEvaluator : TypeEvaluator<Rect> {
-    override fun evaluate(fraction: Float, startFrame: Rect?, targetFrame: Rect?): Rect {
-        if (startFrame != null && targetFrame != null) {
-            val left = startFrame.left + (targetFrame.left - startFrame.left) * fraction
-            val top = startFrame.top + (targetFrame.top - startFrame.top) * fraction
-            val right = startFrame.right + (targetFrame.right - startFrame.right) * fraction
-            val bottom = startFrame.bottom + (targetFrame.bottom - startFrame.bottom) * fraction
-            return Rect(left.toInt(), top.toInt(), right.toInt(), bottom.toInt())
-        }
-        return Rect()
-    }
-
-}
-
-//class FrameAnimator(
-//    val view: View,
-//    val targetFrame: Rect
-//) : TimeAnimator() {
-//
-//    private val startFrame = Rect(view.left, view.top, view.right, view.bottom)
-//
-//    init {
-//        duration = 500
-//        interpolator = LinearInterpolator()
-//        println("XXX animation created")
-//    }
-//
-//
-//
-//    override fun applyTransformation(interpolatedTime: Float, t: Transformation?) {
-//        println("XXX ${interpolatedTime}")
-//        val left = startFrame.left + (targetFrame.left - startFrame.left) * interpolatedTime
-//        val top = startFrame.top + (targetFrame.top - startFrame.top) * interpolatedTime
-//        val right = startFrame.right + (targetFrame.right - startFrame.right) * interpolatedTime
-//        val bottom = startFrame.bottom + (targetFrame.bottom - startFrame.bottom) * interpolatedTime
-//        view.measure(EXACTLY(right - left), EXACTLY(bottom - top))
-//        view.layout(left.toInt(), top.toInt(), right.toInt(), bottom.toInt())
-//    }
-//}
