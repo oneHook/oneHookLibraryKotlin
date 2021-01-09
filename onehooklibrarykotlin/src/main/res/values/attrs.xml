@@ -41,13 +41,20 @@
         <attr name="spacing" format="dimension" />
     </declare-styleable>
 
-    <!--    Circle Image View -->
+    <!-- Circle Image View -->
 
     <declare-styleable name="CircleImageView">
         <attr name="civ_border_width" format="dimension" />
         <attr name="civ_border_color" format="color" />
         <attr name="civ_border_overlay" format="boolean" />
         <attr name="civ_circle_background_color" format="color" />
+    </declare-styleable>
+
+
+    <!-- Cornered Image View -->
+
+    <declare-styleable name="CorneredImageView">
+        <attr name="corner_radius" format="dimension" />
     </declare-styleable>
 
 </resources>
