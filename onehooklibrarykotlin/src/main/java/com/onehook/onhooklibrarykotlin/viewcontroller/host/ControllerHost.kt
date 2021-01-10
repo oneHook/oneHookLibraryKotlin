@@ -191,6 +191,7 @@ open class ControllerHost(activity: OHActivity) : FrameLayout(activity) {
         topViewController?.viewWillDisappear(animated = false)
         topViewController?.viewDidDisappear(animated = false)
         controllers.reversed().forEach {
+            it.navigationController = null
             it.doDestroyView(this)
         }
         dimCovers.reversed().forEach {
