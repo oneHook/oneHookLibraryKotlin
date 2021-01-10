@@ -3,6 +3,7 @@ package com.onehook.onhooklibrarykotlin.viewcontroller.host
 import android.animation.Animator
 import android.content.Context
 import android.graphics.Color
+import android.graphics.Point
 import android.graphics.Rect
 import android.util.Log
 import android.view.GestureDetector
@@ -18,15 +19,10 @@ import com.onehook.onhooklibrarykotlin.viewcontroller.controller.NavigationContr
 import com.onehook.onhooklibrarykotlin.viewcontroller.controller.ViewController
 import com.onehook.onhooklibrarykotlin.viewcontroller.host.transition.BottomToTopControllerTransition
 
-interface OnOutsideClickListener {
-    fun onOutsideClicked()
-}
-
 open class ControllerHost(activity: OHActivity) : FrameLayout(activity) {
 
     private var dimCovers = ArrayList<DimView>()
     private var controllers = ArrayList<ViewController>()
-    var onOutsideClickListener: OnOutsideClickListener? by weak()
 
     var activity: OHActivity? by weak()
         private set
@@ -277,7 +273,7 @@ open class ControllerHost(activity: OHActivity) : FrameLayout(activity) {
         if (topViewController?.onBackPressed() == true) {
             return true
         }
-        if (topViewController?.presentationStyle?.allowDismiss == false) {
+        if (topViewController?.presentationStyle?.allowDismissByBackButton == false) {
             return true
         }
         if (controllers.size <= 1) {
@@ -315,14 +311,21 @@ open class ControllerHost(activity: OHActivity) : FrameLayout(activity) {
 //            }
             override fun onSingleTapUp(e: MotionEvent?): Boolean {
                 println("XXX single tap up")
-//                val it = topViewController?.presentationStyle
-//                if (it != null) {
-//                    if (onOutsideClickListener != null) {
-//                        onOutsideClickListener?.onOutsideClicked()
-//                    } else if (it.allowDismiss && it.allowTapOutsideToDismiss) {
-//                        pop(animated = true, completion = null)
-//                    }
-//                }
+                if (e == null) {
+                    return false
+                }
+                topViewController?.also { currentTop ->
+                    if (currentTop.presentationStyle.allowDismissByTapOutside &&
+                        (currentTop as? ControllerGestureDelegate)?.isTouchOutside(
+                            Point(
+                                e.x.toInt(),
+                                e.y.toInt()
+                            )
+                        ) == true
+                    ) {
+                        pop(animated = true, completion = null)
+                    }
+                }
                 return true
             }
 

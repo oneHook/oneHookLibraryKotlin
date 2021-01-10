@@ -1,11 +1,14 @@
 package com.onehook.onehooklib.ui.controllers
 
 import android.graphics.Color
+import android.graphics.Point
+import android.graphics.Rect
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import androidx.core.graphics.contains
 import com.onehook.onehooklib.ui.reusable.BaseViewController
 import com.onehook.onehooklib.ui.reusable.LargeTextView
 import com.onehook.onehooklib.ui.reusable.RoundedSolidButton
@@ -13,6 +16,7 @@ import com.onehook.onhooklibrarykotlin.utils.dp
 import com.onehook.onhooklibrarykotlin.utils.dpf
 import com.onehook.onhooklibrarykotlin.view.LP
 import com.onehook.onhooklibrarykotlin.viewcontroller.controller.EDView
+import com.onehook.onhooklibrarykotlin.viewcontroller.host.ControllerGestureDelegate
 import com.onehook.onhooklibrarykotlin.viewcontroller.host.PresentationStyle
 import com.onehook.onhooklibrarykotlin.viewcontroller.host.transition.BottomToTopControllerTransition
 import com.onehook.onhooklibrarykotlin.viewcontroller.host.transition.FadeControllerTransition
@@ -27,12 +31,14 @@ private class SimpleDemoViewController : BaseViewController() {
     }
 }
 
-private class SimpleDialogViewController : BaseViewController() {
+private class SimpleDialogViewController : BaseViewController(), ControllerGestureDelegate {
 
+    private lateinit var container: View
     private val content: FrameLayout by lazy {
         FrameLayout(context).apply {
             setBackgroundColor(Color.TRANSPARENT)
             addView(LargeTextView(context = context).apply {
+                container = this
                 layoutParams = LP().apply {
                     width = dp(200)
                     height = dp(150)
@@ -53,6 +59,11 @@ private class SimpleDialogViewController : BaseViewController() {
         }
     }
 
+    override fun isTouchOutside(point: Point): Boolean {
+        val rect = Rect()
+        container.getHitRect(rect)
+        return !rect.contains(point)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
         return content

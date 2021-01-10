@@ -7,14 +7,14 @@ data class PresentationStyle(
     var overCurrentContext: Boolean = false,
 
     /**
-     * If presented controller can be dismissed by back button or other automatic means.
+     * If presented controller can be dismissed by back button.
      */
-    var allowDismiss: Boolean = true,
+    var allowDismissByBackButton: Boolean = true,
 
     /**
      * If presented controller can be dismissed by tapping outside.
      */
-    var allowTapOutsideToDismiss: Boolean = true,
+    var allowDismissByTapOutside: Boolean = true,
 
     /**
      * Transition object to determine the animation. will use
