@@ -7,10 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.recyclerview.widget.RecyclerView
-import com.onehook.onehooklib.ui.controllers.StackLayoutDemoViewController
-import com.onehook.onehooklib.ui.controllers.ViewInflateByCodeDemoViewController
-import com.onehook.onehooklib.ui.controllers.ViewInflateByManualCodeDemoViewController
-import com.onehook.onehooklib.ui.controllers.ViewInflateByXmlDemoViewController
+import com.onehook.onehooklib.ui.controllers.*
 import com.onehook.onehooklib.ui.reusable.LargeTextView
 import com.onehook.onehooklib.ui.reusable.MediumTextView
 import com.onehook.onhooklibrarykotlin.graphics.DrawableFactory
@@ -91,6 +88,14 @@ class MenuViewController : LinearRecyclerViewController() {
                 title = "StackLayout",
                 subtitle = null,
                 action = { StackLayoutDemoViewController() })
+        )
+
+        items.add(Section(title = "Navigation"))
+        items.add(
+            MenuItem(
+                title = "Navigation Demo",
+                subtitle = null,
+                action = { ControllerNavigationDemoViewController() })
         )
     }
 
