@@ -9,8 +9,8 @@ import com.onehook.onehooklib.ui.reusable.RoundedSolidButton
 import com.onehook.onhooklibrarykotlin.utils.dp
 import com.onehook.onhooklibrarykotlin.utils.dpf
 import com.onehook.onhooklibrarykotlin.viewcontroller.controller.EDView
-import com.onehook.onhooklibrarykotlin.viewcontroller.presentation.PresentationStyle
-import com.onehook.onhooklibrarykotlin.viewcontroller.presentation.PresentingAnimation
+import com.onehook.onhooklibrarykotlin.viewcontroller.host.PresentationStyle
+import com.onehook.onhooklibrarykotlin.viewcontroller.host.transition.BottomToTopControllerTransition
 import com.onehook.onhooklibrarykotlin.widget.StackLayout
 
 private class SimpleDemoViewController : BaseViewController() {
@@ -32,7 +32,8 @@ class ControllerNavigationDemoViewController : BaseViewController() {
                 setPadding(dp(20), dp(5), dp(20), dp(5))
                 setOnClickListener {
                     val controller = SimpleDemoViewController().apply {
-                        presentationStyle = PresentationStyle(animation = PresentingAnimation.BOTTOM)
+                        presentationStyle =
+                            PresentationStyle(transition = BottomToTopControllerTransition())
                     }
                     present(viewController = controller, animated = true)
                 }
@@ -42,7 +43,8 @@ class ControllerNavigationDemoViewController : BaseViewController() {
                 setPadding(dp(20), dp(5), dp(20), dp(5))
                 setOnClickListener {
                     val controller = SimpleDemoViewController().apply {
-                        presentationStyle = PresentationStyle(animation = PresentingAnimation.BOTTOM_FADE)
+                        presentationStyle =
+                            PresentationStyle(transition = BottomToTopControllerTransition())
                     }
                     present(viewController = controller, animated = true)
                 }
@@ -52,7 +54,8 @@ class ControllerNavigationDemoViewController : BaseViewController() {
                 setPadding(dp(20), dp(5), dp(20), dp(5))
                 setOnClickListener {
                     val controller = SimpleDemoViewController().apply {
-                        presentationStyle = PresentationStyle(animation = PresentingAnimation.FADE)
+                        presentationStyle =
+                            PresentationStyle(transition = BottomToTopControllerTransition())
                     }
                     present(viewController = controller, animated = true)
                 }
@@ -62,7 +65,8 @@ class ControllerNavigationDemoViewController : BaseViewController() {
                 setPadding(dp(20), dp(5), dp(20), dp(5))
                 setOnClickListener {
                     val controller = SimpleDemoViewController().apply {
-                        presentationStyle = PresentationStyle(animation = PresentingAnimation.RIGHT)
+                        presentationStyle =
+                            PresentationStyle(transition = BottomToTopControllerTransition())
                     }
                     present(viewController = controller, animated = true)
                 }
@@ -72,7 +76,8 @@ class ControllerNavigationDemoViewController : BaseViewController() {
                 setPadding(dp(20), dp(5), dp(20), dp(5))
                 setOnClickListener {
                     val controller = SimpleDemoViewController().apply {
-                        presentationStyle = PresentationStyle(animation = PresentingAnimation.RIGHT_REVEAL)
+                        presentationStyle =
+                            PresentationStyle(transition = BottomToTopControllerTransition())
                     }
                     present(viewController = controller, animated = true)
                 }
@@ -82,7 +87,8 @@ class ControllerNavigationDemoViewController : BaseViewController() {
                 setPadding(dp(20), dp(5), dp(20), dp(5))
                 setOnClickListener {
                     val controller = SimpleDemoViewController().apply {
-                        presentationStyle = PresentationStyle(animation = PresentingAnimation.RIGHT_TRANSLATION)
+                        presentationStyle =
+                            PresentationStyle(transition = BottomToTopControllerTransition())
                     }
                     present(viewController = controller, animated = true)
                 }

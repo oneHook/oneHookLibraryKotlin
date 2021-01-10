@@ -1,27 +1,8 @@
-package com.onehook.onhooklibrarykotlin.viewcontroller.presentation
-
-import android.view.Gravity
-import com.onehook.onhooklibrarykotlin.viewcontroller.host.ControllerTransition
-import com.onehook.onhooklibrarykotlin.viewcontroller.host.transition.BottomToTopControllerTransition
-
-enum class PresentingAnimation {
-    RIGHT,
-    RIGHT_REVEAL,
-    RIGHT_TRANSLATION,
-    BOTTOM,
-    FADE,
-    BOTTOM_FADE
-}
+package com.onehook.onhooklibrarykotlin.viewcontroller.host
 
 data class PresentationStyle(
-    var animation: PresentingAnimation = PresentingAnimation.RIGHT,
-    var dim: Boolean = true,
-    var duration: Long = 250,
-    var fullscreen: Boolean = true,
-    var gravity: Int = Gravity.TOP,
     var overCurrentContext: Boolean = false,
     var allowDismiss: Boolean = true,
     var allowTapOutsideToDismiss: Boolean = true,
-    var minimumSideMargin: Int = 0,
     var transition: ControllerTransition? = null
 )

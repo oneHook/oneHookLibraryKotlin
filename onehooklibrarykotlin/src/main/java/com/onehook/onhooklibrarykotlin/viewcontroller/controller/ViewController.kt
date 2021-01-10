@@ -9,8 +9,8 @@ import android.view.ViewGroup
 import com.onehook.onhooklibrarykotlin.app.OHActivity
 import com.onehook.onhooklibrarykotlin.utils.weak
 import com.onehook.onhooklibrarykotlin.view.MATCH_PARENT
-import com.onehook.onhooklibrarykotlin.viewcontroller.presentation.PresentationStyle
 import com.onehook.onhooklibrarykotlin.view.ViewRes
+import com.onehook.onhooklibrarykotlin.viewcontroller.host.PresentationStyle
 import kotlin.reflect.KMutableProperty
 import kotlin.reflect.full.findAnnotation
 import kotlin.reflect.full.memberProperties
@@ -111,6 +111,7 @@ open class ViewController {
             Log.i("oneHook", "${javaClass.simpleName} ($tag) VIEW WILL LAYOUT SUBVIEWS")
         }
     }
+
     open fun viewDidLayoutSubviews() {
         if (verbose) {
             Log.i("oneHook", "${javaClass.simpleName} ($tag) VIEW DID LAYOUT SUBVIEWS")
@@ -175,7 +176,7 @@ open class ViewController {
  * ViewGroup subclass that works with ViewController to notify
  * controller when layout is needed.
  */
-class EDView(private val viewController: ViewController): ViewGroup(viewController.activity) {
+class EDView(private val viewController: ViewController) : ViewGroup(viewController.activity) {
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
         viewController.viewWillLayoutSubviews()
         viewController.viewDidLayoutSubviews()
