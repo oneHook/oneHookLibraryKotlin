@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.onehook.onhooklibrarykotlin.viewcontroller.host.ControllerHost
+import com.onehook.onhooklibrarykotlin.viewcontroller.host.transition.LeftToRightControllerTransition
 
 open class NavigationController(var root: ViewController) : ViewController() {
 
@@ -17,7 +18,7 @@ open class NavigationController(var root: ViewController) : ViewController() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
         return ControllerHost(activity = activity).also {
             controllerHost = it
-            it.setBackgroundColor(Color.WHITE)
+            it.setBackgroundColor(Color.BLACK)
         }
     }
 
@@ -50,6 +51,7 @@ open class NavigationController(var root: ViewController) : ViewController() {
     fun push(viewController: ViewController, animated: Boolean, completion: (() -> Unit)? = null) {
         view.post {
             viewController.navigationController = this
+            viewController.presentationStyle.transition = viewController.presentationStyle.transition ?: LeftToRightControllerTransition()
             controllerHost?.push(
                 viewController = viewController,
                 activity = activity,

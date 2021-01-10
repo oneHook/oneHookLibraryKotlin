@@ -16,16 +16,12 @@ import com.onehook.onhooklibrarykotlin.utils.weak
 import com.onehook.onhooklibrarykotlin.view.EXACTLY
 import com.onehook.onhooklibrarykotlin.viewcontroller.controller.ViewController
 import com.onehook.onhooklibrarykotlin.viewcontroller.host.transition.BottomToTopControllerTransition
-import kotlin.math.max
 
 interface OnOutsideClickListener {
     fun onOutsideClicked()
 }
 
 open class ControllerHost(activity: OHActivity) : FrameLayout(activity) {
-
-    private var disappearRatio: Float = 0.1f
-    private var dimRatio: Float = 0.5f
 
     private var dimCovers = ArrayList<DimView>()
     private var controllers = ArrayList<ViewController>()

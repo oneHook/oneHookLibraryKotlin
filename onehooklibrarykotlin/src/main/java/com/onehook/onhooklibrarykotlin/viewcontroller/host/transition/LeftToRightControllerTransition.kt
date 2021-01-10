@@ -5,26 +5,26 @@ import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import com.onehook.onhooklibrarykotlin.viewcontroller.host.ControllerTransition
 
-class BottomToTopControllerTransition : ControllerTransition() {
+class LeftToRightControllerTransition : ControllerTransition() {
 
     var dismissMoveRatio = 0.15f
     var dim = true
 
     override fun createEnteringAnimation(context: TransitionContext): AnimatorSet {
-        val frameHeight = context.frame.height().toFloat()
+        val frameWidth = context.frame.width().toFloat()
         return AnimatorSet().also {
             it.duration = animationDuration
             val animations = arrayListOf<Animator>(
-                ObjectAnimator.ofFloat(context.toController.view, "translationY", frameHeight, 0f),
+                ObjectAnimator.ofFloat(context.toController.view, "translationX", frameWidth, 0f),
                 ObjectAnimator.ofFloat(context.cover, "alpha", 0f, if (dim) 1f else 0f)
             )
             context.fromController?.view?.apply {
                 animations.add(
                     ObjectAnimator.ofFloat(
                         this,
-                        "translationY",
+                        "translationX",
                         0f,
-                        -frameHeight * dismissMoveRatio
+                        -frameWidth * dismissMoveRatio
                     )
                 )
             }
@@ -33,29 +33,29 @@ class BottomToTopControllerTransition : ControllerTransition() {
     }
 
     override fun onEnteringAnimationFinished(context: TransitionContext) {
-        val frameHeight = context.frame.height().toFloat()
+        val frameWidth = context.frame.width().toFloat()
         context.cover.alpha = if (dim) 1f else 0f
         context.fromController?.apply {
-            view.translationY = -frameHeight * dismissMoveRatio
+            view.translationX = -frameWidth * dismissMoveRatio
         }
         context.toController.apply {
-            view.translationY = 0f
+            view.translationX = 0f
         }
     }
 
     override fun createExitingAnimation(context: TransitionContext): AnimatorSet {
-        val frameHeight = context.frame.height().toFloat()
+        val frameWidth = context.frame.width().toFloat()
         return AnimatorSet().also {
             it.duration = animationDuration
             val animations = arrayListOf<Animator>(
-                ObjectAnimator.ofFloat(context.toController.view, "translationY", 0f, frameHeight),
+                ObjectAnimator.ofFloat(context.toController.view, "translationX", 0f, frameWidth),
                 ObjectAnimator.ofFloat(context.cover, "alpha", if (dim) 1f else 0f, 0f)
             )
             context.fromController?.view?.apply {
                 animations.add(
                     ObjectAnimator.ofFloat(
                         this,
-                        "translationY",
+                        "translationX",
                         0f
                     )
                 )
@@ -67,10 +67,10 @@ class BottomToTopControllerTransition : ControllerTransition() {
     override fun onExitingAnimationFinished(context: TransitionContext) {
         context.cover.alpha = 0f
         context.fromController?.apply {
-            view.translationY = 0f
+            view.translationX = 0f
         }
         context.toController.apply {
-            view.translationY = context.frame.height().toFloat()
+            view.translationX = context.frame.width().toFloat()
         }
     }
 }

@@ -11,6 +11,7 @@ import com.onehook.onhooklibrarykotlin.utils.dpf
 import com.onehook.onhooklibrarykotlin.viewcontroller.controller.EDView
 import com.onehook.onhooklibrarykotlin.viewcontroller.host.PresentationStyle
 import com.onehook.onhooklibrarykotlin.viewcontroller.host.transition.BottomToTopControllerTransition
+import com.onehook.onhooklibrarykotlin.viewcontroller.host.transition.LeftToRightControllerTransition
 import com.onehook.onhooklibrarykotlin.widget.StackLayout
 
 private class SimpleDemoViewController : BaseViewController() {
@@ -28,7 +29,7 @@ class ControllerNavigationDemoViewController : BaseViewController() {
             orientation = StackLayout.Orientation.VERTICAL
             spacing = dpf(10)
             addView(RoundedSolidButton(context = context, color = Color.RED).apply {
-                text = "BOTTOM"
+                text = "BOTTOM UP DEFAULT"
                 setPadding(dp(20), dp(5), dp(20), dp(5))
                 setOnClickListener {
                     val controller = SimpleDemoViewController().apply {
@@ -39,56 +40,64 @@ class ControllerNavigationDemoViewController : BaseViewController() {
                 }
             })
             addView(RoundedSolidButton(context = context, color = Color.RED).apply {
-                text = "BOTTOM FADE"
+                text = "BOTTOM UP NO DIM"
                 setPadding(dp(20), dp(5), dp(20), dp(5))
                 setOnClickListener {
                     val controller = SimpleDemoViewController().apply {
                         presentationStyle =
-                            PresentationStyle(transition = BottomToTopControllerTransition())
+                            PresentationStyle(transition = BottomToTopControllerTransition().apply {
+                                dim = false
+                            })
                     }
                     present(viewController = controller, animated = true)
                 }
             })
             addView(RoundedSolidButton(context = context, color = Color.RED).apply {
-                text = "FADE"
+                text = "BOTTOM UP NO MOVE"
                 setPadding(dp(20), dp(5), dp(20), dp(5))
                 setOnClickListener {
                     val controller = SimpleDemoViewController().apply {
                         presentationStyle =
-                            PresentationStyle(transition = BottomToTopControllerTransition())
+                            PresentationStyle(transition = BottomToTopControllerTransition().apply {
+                                dismissMoveRatio = 0f
+                            })
                     }
                     present(viewController = controller, animated = true)
                 }
             })
             addView(RoundedSolidButton(context = context, color = Color.RED).apply {
-                text = "RIGHT"
+                text = "LEFT RIGHT DEFAULT"
                 setPadding(dp(20), dp(5), dp(20), dp(5))
                 setOnClickListener {
                     val controller = SimpleDemoViewController().apply {
                         presentationStyle =
-                            PresentationStyle(transition = BottomToTopControllerTransition())
+                            PresentationStyle(transition = LeftToRightControllerTransition())
                     }
                     present(viewController = controller, animated = true)
                 }
             })
             addView(RoundedSolidButton(context = context, color = Color.RED).apply {
-                text = "RIGHT REVEAL"
+                text = "LEFT RIGHT NO DIML"
                 setPadding(dp(20), dp(5), dp(20), dp(5))
                 setOnClickListener {
                     val controller = SimpleDemoViewController().apply {
                         presentationStyle =
-                            PresentationStyle(transition = BottomToTopControllerTransition())
+                            PresentationStyle(transition = LeftToRightControllerTransition().apply {
+                                dim = false
+                            })
                     }
                     present(viewController = controller, animated = true)
                 }
             })
             addView(RoundedSolidButton(context = context, color = Color.RED).apply {
-                text = "RIGHT TRANSLATION"
+                text = "LEFT RIGHT NO MOVE"
                 setPadding(dp(20), dp(5), dp(20), dp(5))
                 setOnClickListener {
                     val controller = SimpleDemoViewController().apply {
                         presentationStyle =
-                            PresentationStyle(transition = BottomToTopControllerTransition())
+                            PresentationStyle(transition = LeftToRightControllerTransition().apply {
+                                dismissMoveRatio = 0f
+                            })
                     }
                     present(viewController = controller, animated = true)
                 }
