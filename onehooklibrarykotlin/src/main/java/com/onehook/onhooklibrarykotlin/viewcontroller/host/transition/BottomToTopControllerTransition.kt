@@ -9,7 +9,7 @@ class BottomToTopControllerTransition : ControllerTransition() {
 
     var dismissMoveRatio = 0.15f
     var dim = true
-    var dimRatio = 1f
+    var dimRatio = 0.5f
 
     override fun createEnteringAnimation(context: TransitionContext): AnimatorSet {
         val frameHeight = context.frame.height().toFloat()

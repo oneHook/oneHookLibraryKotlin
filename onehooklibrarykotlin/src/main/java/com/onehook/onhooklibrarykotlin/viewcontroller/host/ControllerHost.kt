@@ -299,24 +299,14 @@ open class ControllerHost(activity: OHActivity) : FrameLayout(activity) {
 
     private val detector =
         GestureDetectorCompat(context, object : GestureDetector.SimpleOnGestureListener() {
-
-            override fun onDown(e: MotionEvent?): Boolean {
-                println("XXX on down")
-                return true
-            }
-
-            //            override fun onSingleTapConfirmed(e: MotionEvent?): Boolean {
-//                println("XXX single tap confirmed")
-//                return true
-//            }
+            override fun onDown(e: MotionEvent?): Boolean = true
             override fun onSingleTapUp(e: MotionEvent?): Boolean {
-                println("XXX single tap up")
                 if (e == null) {
                     return false
                 }
                 topViewController?.also { currentTop ->
                     if (currentTop.presentationStyle.allowDismissByTapOutside &&
-                        (currentTop as? ControllerGestureDelegate)?.isTouchOutside(
+                        (currentTop as? ControllerInteractiveGestureDelegate)?.isTouchOutside(
                             Point(
                                 e.x.toInt(),
                                 e.y.toInt()
@@ -335,8 +325,19 @@ open class ControllerHost(activity: OHActivity) : FrameLayout(activity) {
                 distanceX: Float,
                 distanceY: Float
             ): Boolean {
-                println("XXX on scroll ${distanceX} ${distanceY}")
-                return true
+                if (e1 == null || e2 == null) {
+                    return false
+                }
+                println("XXX on scroll (${e1.x},${e1.y}) (${e2.x},${e2.y}) ${e1.action} ${e2.action} ")
+                val diff = e2.x - e1.x
+                controllers[controllers.size - 2].also {
+                    it.view.visibility = View.VISIBLE
+//                    requestLayout()
+//                    println("XXX should make ${it} visible")
+                }
+                topViewController?.view?.translationX = diff
+
+                return false
             }
         })
 

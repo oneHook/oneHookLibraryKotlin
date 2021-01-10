@@ -2,6 +2,6 @@ package com.onehook.onhooklibrarykotlin.viewcontroller.host
 
 import android.graphics.Point
 
-interface ControllerGestureDelegate {
+interface ControllerInteractiveGestureDelegate {
     fun isTouchOutside(point: Point): Boolean
 }

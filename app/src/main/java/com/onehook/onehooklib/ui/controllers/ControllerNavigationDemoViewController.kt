@@ -16,7 +16,7 @@ import com.onehook.onhooklibrarykotlin.utils.dp
 import com.onehook.onhooklibrarykotlin.utils.dpf
 import com.onehook.onhooklibrarykotlin.view.LP
 import com.onehook.onhooklibrarykotlin.viewcontroller.controller.EDView
-import com.onehook.onhooklibrarykotlin.viewcontroller.host.ControllerGestureDelegate
+import com.onehook.onhooklibrarykotlin.viewcontroller.host.ControllerInteractiveGestureDelegate
 import com.onehook.onhooklibrarykotlin.viewcontroller.host.PresentationStyle
 import com.onehook.onhooklibrarykotlin.viewcontroller.host.transition.BottomToTopControllerTransition
 import com.onehook.onhooklibrarykotlin.viewcontroller.host.transition.FadeControllerTransition
@@ -31,7 +31,7 @@ private class SimpleDemoViewController : BaseViewController() {
     }
 }
 
-private class SimpleDialogViewController : BaseViewController(), ControllerGestureDelegate {
+private class SimpleDialogViewControllerInteractive : BaseViewController(), ControllerInteractiveGestureDelegate {
 
     private lateinit var container: View
     private val content: FrameLayout by lazy {
@@ -167,7 +167,7 @@ class ControllerNavigationDemoViewController : BaseViewController() {
                 text = "Dialog"
                 setPadding(dp(20), dp(5), dp(20), dp(5))
                 setOnClickListener {
-                    val controller = SimpleDialogViewController().apply {
+                    val controller = SimpleDialogViewControllerInteractive().apply {
                         presentationStyle =
                             PresentationStyle(
                                 overCurrentContext = true,

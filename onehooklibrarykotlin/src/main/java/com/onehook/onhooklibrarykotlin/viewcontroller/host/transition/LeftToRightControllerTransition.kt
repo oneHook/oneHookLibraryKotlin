@@ -9,7 +9,7 @@ class LeftToRightControllerTransition : ControllerTransition() {
 
     var dismissMoveRatio = 0.15f
     var dim = true
-    var dimRatio = 1.0f
+    var dimRatio = 0.5f
 
     override fun createEnteringAnimation(context: TransitionContext): AnimatorSet {
         val frameWidth = context.frame.width().toFloat()
