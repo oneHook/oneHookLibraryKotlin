@@ -11,6 +11,7 @@ import com.onehook.onhooklibrarykotlin.utils.dpf
 import com.onehook.onhooklibrarykotlin.viewcontroller.controller.EDView
 import com.onehook.onhooklibrarykotlin.viewcontroller.host.PresentationStyle
 import com.onehook.onhooklibrarykotlin.viewcontroller.host.transition.BottomToTopControllerTransition
+import com.onehook.onhooklibrarykotlin.viewcontroller.host.transition.FadeControllerTransition
 import com.onehook.onhooklibrarykotlin.viewcontroller.host.transition.LeftToRightControllerTransition
 import com.onehook.onhooklibrarykotlin.widget.StackLayout
 
@@ -97,6 +98,19 @@ class ControllerNavigationDemoViewController : BaseViewController() {
                         presentationStyle =
                             PresentationStyle(transition = LeftToRightControllerTransition().apply {
                                 dismissMoveRatio = 0f
+                            })
+                    }
+                    present(viewController = controller, animated = true)
+                }
+            })
+            addView(RoundedSolidButton(context = context, color = Color.RED).apply {
+                text = "Fade"
+                setPadding(dp(20), dp(5), dp(20), dp(5))
+                setOnClickListener {
+                    val controller = SimpleDemoViewController().apply {
+                        presentationStyle =
+                            PresentationStyle(transition = FadeControllerTransition().apply {
+                                shouldFadeoutFrom = true
                             })
                     }
                     present(viewController = controller, animated = true)
