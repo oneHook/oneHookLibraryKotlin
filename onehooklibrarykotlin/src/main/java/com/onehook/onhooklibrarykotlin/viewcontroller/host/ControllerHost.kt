@@ -75,15 +75,16 @@ open class ControllerHost(activity: OHActivity) : FrameLayout(activity) {
         if (!viewController.presentationStyle.fullscreen) {
             throw RuntimeException("You can't add a non-full screen view controller at bottom")
         }
-        var layoutParams = LayoutParams(viewController.view.layoutParams).apply {
-            width = LayoutParams.MATCH_PARENT
-            height = LayoutParams.MATCH_PARENT
+        viewController.also {
+            it.view.layoutParams = LayoutParams(viewController.view.layoutParams).apply {
+                width = LayoutParams.MATCH_PARENT
+                height = LayoutParams.MATCH_PARENT
+            }
+            controllers.add(0, it)
+            addView(it.view, 0)
+            measureChild(viewController.view)
+            it.view.visibility = View.GONE
         }
-        viewController.view.layoutParams = layoutParams
-        controllers.add(0, viewController)
-        addView(viewController.view, 0)
-        measureChild(viewController.view)
-        viewController.view.visibility = View.GONE
         DimView(context = context).also { cover ->
             dimCovers.add(0, cover)
             addView(cover, 0)
@@ -113,7 +114,7 @@ open class ControllerHost(activity: OHActivity) : FrameLayout(activity) {
         printStack()
         transactionInProgress = true
         viewController.doCreateView(container = this, activity = activity)
-        val layoutParams = LayoutParams(viewController.view.layoutParams).apply {
+        viewController.view.layoutParams = LayoutParams(viewController.view.layoutParams).apply {
             if (viewController.presentationStyle.fullscreen.not()) {
                 marginStart = viewController.presentationStyle.minimumSideMargin
                 marginEnd = viewController.presentationStyle.minimumSideMargin
@@ -122,7 +123,6 @@ open class ControllerHost(activity: OHActivity) : FrameLayout(activity) {
             }
             gravity = viewController.presentationStyle.gravity
         }
-        viewController.view.layoutParams = layoutParams
         val currentTop = topViewController
         val cover = DimView(context = context).also { cover ->
             dimCovers.add(cover)
@@ -521,7 +521,7 @@ open class ControllerHost(activity: OHActivity) : FrameLayout(activity) {
 
     private fun printStack() {
         log("===========")
-        log("COUNT", controllers.size, dimCovers.size, childCount)
+        log("${controllers.size} In Stack, ${dimCovers.size} covers and ${childCount} subViews")
         log("Stack     :", controllers)
         log("Dim Covers:", dimCovers)
         log("===========")

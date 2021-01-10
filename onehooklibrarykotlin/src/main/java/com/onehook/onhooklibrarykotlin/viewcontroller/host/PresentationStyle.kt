@@ -1,6 +1,8 @@
 package com.onehook.onhooklibrarykotlin.viewcontroller.presentation
 
 import android.view.Gravity
+import com.onehook.onhooklibrarykotlin.viewcontroller.host.ControllerTransition
+import com.onehook.onhooklibrarykotlin.viewcontroller.host.transition.BottomToTopControllerTransition
 
 enum class PresentingAnimation {
     RIGHT,
@@ -20,5 +22,6 @@ data class PresentationStyle(
     var overCurrentContext: Boolean = false,
     var allowDismiss: Boolean = true,
     var allowTapOutsideToDismiss: Boolean = true,
-    var minimumSideMargin: Int = 0
+    var minimumSideMargin: Int = 0,
+    var transition: ControllerTransition? = null
 )
