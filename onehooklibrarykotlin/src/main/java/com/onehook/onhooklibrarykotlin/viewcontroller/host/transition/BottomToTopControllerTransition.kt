@@ -9,6 +9,7 @@ class BottomToTopControllerTransition : ControllerTransition() {
 
     var dismissMoveRatio = 0.15f
     var dim = true
+    var dimRatio = 1f
 
     override fun createEnteringAnimation(context: TransitionContext): AnimatorSet {
         val frameHeight = context.frame.height().toFloat()
@@ -16,7 +17,7 @@ class BottomToTopControllerTransition : ControllerTransition() {
             it.duration = animationDuration
             val animations = arrayListOf<Animator>(
                 ObjectAnimator.ofFloat(context.toController.view, "translationY", frameHeight, 0f),
-                ObjectAnimator.ofFloat(context.cover, "alpha", 0f, if (dim) 1f else 0f)
+                ObjectAnimator.ofFloat(context.cover, "alpha", 0f, if (dim) dimRatio else 0f)
             )
             context.fromController?.view?.apply {
                 animations.add(
@@ -34,7 +35,7 @@ class BottomToTopControllerTransition : ControllerTransition() {
 
     override fun onEnteringAnimationFinished(context: TransitionContext) {
         val frameHeight = context.frame.height().toFloat()
-        context.cover.alpha = if (dim) 1f else 0f
+        context.cover.alpha = if (dim) dimRatio else 0f
         context.fromController?.apply {
             view.translationY = -frameHeight * dismissMoveRatio
         }
@@ -49,7 +50,7 @@ class BottomToTopControllerTransition : ControllerTransition() {
             it.duration = animationDuration
             val animations = arrayListOf<Animator>(
                 ObjectAnimator.ofFloat(context.toController.view, "translationY", 0f, frameHeight),
-                ObjectAnimator.ofFloat(context.cover, "alpha", if (dim) 1f else 0f, 0f)
+                ObjectAnimator.ofFloat(context.cover, "alpha", if (dim) dimRatio else 0f, 0f)
             )
             context.fromController?.view?.apply {
                 animations.add(

@@ -9,6 +9,7 @@ class LeftToRightControllerTransition : ControllerTransition() {
 
     var dismissMoveRatio = 0.15f
     var dim = true
+    var dimRatio = 1.0f
 
     override fun createEnteringAnimation(context: TransitionContext): AnimatorSet {
         val frameWidth = context.frame.width().toFloat()
@@ -16,7 +17,7 @@ class LeftToRightControllerTransition : ControllerTransition() {
             it.duration = animationDuration
             val animations = arrayListOf<Animator>(
                 ObjectAnimator.ofFloat(context.toController.view, "translationX", frameWidth, 0f),
-                ObjectAnimator.ofFloat(context.cover, "alpha", 0f, if (dim) 1f else 0f)
+                ObjectAnimator.ofFloat(context.cover, "alpha", 0f, if (dim) dimRatio else 0f)
             )
             context.fromController?.view?.apply {
                 animations.add(
@@ -34,7 +35,7 @@ class LeftToRightControllerTransition : ControllerTransition() {
 
     override fun onEnteringAnimationFinished(context: TransitionContext) {
         val frameWidth = context.frame.width().toFloat()
-        context.cover.alpha = if (dim) 1f else 0f
+        context.cover.alpha = if (dim) dimRatio else 0f
         context.fromController?.apply {
             view.translationX = -frameWidth * dismissMoveRatio
         }
@@ -49,7 +50,7 @@ class LeftToRightControllerTransition : ControllerTransition() {
             it.duration = animationDuration
             val animations = arrayListOf<Animator>(
                 ObjectAnimator.ofFloat(context.toController.view, "translationX", 0f, frameWidth),
-                ObjectAnimator.ofFloat(context.cover, "alpha", if (dim) 1f else 0f, 0f)
+                ObjectAnimator.ofFloat(context.cover, "alpha", if (dim) dimRatio else 0f, 0f)
             )
             context.fromController?.view?.apply {
                 animations.add(
