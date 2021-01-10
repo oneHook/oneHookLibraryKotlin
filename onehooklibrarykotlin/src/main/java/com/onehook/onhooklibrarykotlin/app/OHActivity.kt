@@ -2,10 +2,11 @@ package com.onehook.onhooklibrarykotlin.app
 
 import android.graphics.Rect
 import android.os.Bundle
-import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.onehook.onhooklibrarykotlin.viewcontroller.controller.ViewController
 import com.onehook.onhooklibrarykotlin.viewcontroller.window.Window
+
 
 open class OHActivity : AppCompatActivity() {
 
@@ -15,7 +16,7 @@ open class OHActivity : AppCompatActivity() {
 
     private var isWindowReady: Boolean = false
 
-    lateinit var view: FrameLayout
+    lateinit var view: CoordinatorLayout
         private set
 
     val controllerWindow: Window by lazy {
@@ -26,8 +27,7 @@ open class OHActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        supportRequestWindowFeature(android.view.Window.FEATURE_NO_TITLE)
-        view = FrameLayout(this)
+        view = CoordinatorLayout(this)
         setContentView(view)
 
         window.decorView.setOnApplyWindowInsetsListener { _, insets ->

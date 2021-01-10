@@ -14,6 +14,7 @@ import com.onehook.onhooklibrarykotlin.app.OHActivity
 import com.onehook.onhooklibrarykotlin.utils.AnimationEndListener
 import com.onehook.onhooklibrarykotlin.utils.weak
 import com.onehook.onhooklibrarykotlin.view.EXACTLY
+import com.onehook.onhooklibrarykotlin.viewcontroller.controller.NavigationController
 import com.onehook.onhooklibrarykotlin.viewcontroller.controller.ViewController
 import com.onehook.onhooklibrarykotlin.viewcontroller.host.transition.BottomToTopControllerTransition
 
@@ -290,37 +291,6 @@ open class ControllerHost(activity: OHActivity) : FrameLayout(activity) {
         view.measure(EXACTLY(measuredWidth), EXACTLY(measuredHeight))
     }
 
-    override fun addView(child: View?) {
-        super.addView(child)
-        onlyAllowTopViewToReceiveTouch()
-    }
-
-    override fun addView(child: View?, index: Int) {
-        super.addView(child, index)
-        onlyAllowTopViewToReceiveTouch()
-    }
-
-    override fun removeView(view: View?) {
-        super.removeView(view)
-        onlyAllowTopViewToReceiveTouch()
-    }
-
-    /**
-     * Make sure only the top view receive touch events,
-     * all views under it will ignore any touch
-     */
-    private fun onlyAllowTopViewToReceiveTouch() {
-        if (childCount == 0 || childCount % 2 != 0) {
-            return
-        }
-        for (index in childCount - 1 downTo 0) {
-            getChildAt(index).setOnTouchListener { _, _ ->
-                true
-            }
-        }
-        getChildAt(childCount - 1).setOnTouchListener(null)
-    }
-
     private fun printStack() {
         log("===========")
         log("${controllers.size} In Stack, ${dimCovers.size} covers and ${childCount} subViews")
@@ -330,17 +300,39 @@ open class ControllerHost(activity: OHActivity) : FrameLayout(activity) {
     }
 
     private var testRect = Rect()
+
     private val detector =
         GestureDetectorCompat(context, object : GestureDetector.SimpleOnGestureListener() {
+
+            override fun onDown(e: MotionEvent?): Boolean {
+                println("XXX on down")
+                return true
+            }
+
+            //            override fun onSingleTapConfirmed(e: MotionEvent?): Boolean {
+//                println("XXX single tap confirmed")
+//                return true
+//            }
             override fun onSingleTapUp(e: MotionEvent?): Boolean {
-                val it = topViewController?.presentationStyle
-                if (it != null) {
-                    if (onOutsideClickListener != null) {
-                        onOutsideClickListener?.onOutsideClicked()
-                    } else if (it.allowDismiss && it.allowTapOutsideToDismiss) {
-                        pop(animated = true, completion = null)
-                    }
-                }
+                println("XXX single tap up")
+//                val it = topViewController?.presentationStyle
+//                if (it != null) {
+//                    if (onOutsideClickListener != null) {
+//                        onOutsideClickListener?.onOutsideClicked()
+//                    } else if (it.allowDismiss && it.allowTapOutsideToDismiss) {
+//                        pop(animated = true, completion = null)
+//                    }
+//                }
+                return true
+            }
+
+            override fun onScroll(
+                e1: MotionEvent?,
+                e2: MotionEvent?,
+                distanceX: Float,
+                distanceY: Float
+            ): Boolean {
+                println("XXX on scroll ${distanceX} ${distanceY}")
                 return true
             }
         })
@@ -349,16 +341,25 @@ open class ControllerHost(activity: OHActivity) : FrameLayout(activity) {
         if (childCount == 0 || ev == null) {
             return false
         }
-        getChildAt(childCount - 1).getHitRect(testRect)
-        if (testRect.contains(ev.x.toInt(), ev.y.toInt())) {
-            super.dispatchTouchEvent(ev)
-        } else {
-            detector.onTouchEvent(ev)
+        /* Always dispatch to the top view controller */
+        val currentTop = topViewController
+        currentTop?.view?.dispatchTouchEvent(ev)
+        if (currentTop is NavigationController) {
+            return true
+        }
+        detector.onTouchEvent(ev)
+        when (ev.action) {
+            MotionEvent.ACTION_DOWN -> println("XXX action down")
+            MotionEvent.ACTION_MOVE -> println("XXX action move")
+            MotionEvent.ACTION_CANCEL, MotionEvent.ACTION_UP -> println("XXX action up/cancel")
         }
         return true
     }
 }
 
+/**
+ * Cover view in between view controllers.
+ */
 private class DimView(context: Context) : View(context) {
 
     init {
@@ -377,5 +378,5 @@ private class DimView(context: Context) : View(context) {
 }
 
 private fun log(vararg args: Any) {
-    Log.d("oneHook", args.joinToString(" "))
+    Log.d("oneHook XXX", args.joinToString(" "))
 }

@@ -43,6 +43,13 @@ private class SimpleDialogViewController : BaseViewController() {
                 setTextColor(Color.WHITE)
                 setBackgroundColor(Color.BLUE)
             })
+            addView(RoundedSolidButton(context = context, color = Color.YELLOW).apply {
+                layoutParams = LP().apply {
+                    layoutGravity = Gravity.CENTER
+                }.frameLayoutLp()
+                setPadding(dp(20), dp(10), dp(20), dp(10))
+                text = "Click Me"
+            })
         }
     }
 
