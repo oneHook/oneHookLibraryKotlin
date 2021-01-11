@@ -1,5 +1,6 @@
 package com.onehook.onhooklibrarykotlin.widget
 
+import android.animation.Animator
 import android.animation.FloatArrayEvaluator
 import android.animation.ValueAnimator
 import android.content.Context
@@ -56,8 +57,8 @@ open class LineGraphView @JvmOverloads constructor(
 
     private var needsRefresh = false
     private val strokePaint = Paint().apply {
-        strokeWidth = dpf(2)
-        color = Color.WHITE
+        strokeWidth = dpf(8)
+        color = strokeColor
         style = Paint.Style.STROKE
     }
     private val gradientPaint = Paint()
@@ -73,6 +74,10 @@ open class LineGraphView @JvmOverloads constructor(
     @ColorInt
     private
     var endColor: Int = Color.BLACK
+
+    @ColorInt
+    private
+    var strokeColor: Int = Color.GRAY
 
     init {
         setWillNotDraw(false)
@@ -218,19 +223,30 @@ open class LineGraphView @JvmOverloads constructor(
         invalidate()
     }
 
-    fun bind(uiModel: LineGraphUIModel, animated: Boolean) {
-        needsRefresh = true
-        this.uiModel = uiModel
-        refresh(points = uiModel.points, smooth = uiModel.smooth)
+    fun setStrokeColor(@ColorInt strokeColor: Int) {
+        this.strokeColor = strokeColor
+        strokePaint.color = strokeColor
+        invalidate()
     }
 
-    fun getAnimator(newPoints: FloatArray) {
-        ValueAnimator.ofObject(
+    fun bind(uiModel: LineGraphUIModel, animated: Boolean) {
+        if (animated) {
+            getAnimator(uiModel.points).setDuration(250).start()
+        } else {
+            needsRefresh = true
+            refresh(points = uiModel.points, smooth = uiModel.smooth)
+        }
+        this.uiModel = uiModel
+    }
+
+    fun getAnimator(newPoints: FloatArray): Animator {
+        return ValueAnimator.ofObject(
             FloatArrayEvaluator(),
             uiModel.points,
             newPoints
         ).apply {
             addUpdateListener {
+                needsRefresh = true
                 val points = it.animatedValue as FloatArray
                 refresh(points = points, smooth = uiModel.smooth)
             }

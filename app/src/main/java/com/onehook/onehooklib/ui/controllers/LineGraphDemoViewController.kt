@@ -44,6 +44,7 @@ class LineGraphDemoViewController : BaseDetailViewController() {
                 }.linearLayoutLp()
                 setBackgroundColor(Color.WHITE)
                 setGradientColor(Color.RED, Color.WHITE)
+                setStrokeColor(Color.YELLOW)
                 graph2 = this
             })
 
