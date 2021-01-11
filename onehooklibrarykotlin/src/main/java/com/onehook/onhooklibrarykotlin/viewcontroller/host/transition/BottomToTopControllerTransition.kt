@@ -85,7 +85,8 @@ class BottomToTopControllerTransition : ControllerTransition() {
     ) {
         val progress = verticalProgress(context, start, current)
         context.toController.view.translationY = (current.y - start.y).toFloat()
-        println("XXX progress ${progress}")
+        context.fromController?.view?.translationY = (current.y - start.y).toFloat() * dismissMoveRatio
+        context.cover.alpha = (1 - progress) * dimRatio
     }
 
     override fun finishInteractiveDismiss(
