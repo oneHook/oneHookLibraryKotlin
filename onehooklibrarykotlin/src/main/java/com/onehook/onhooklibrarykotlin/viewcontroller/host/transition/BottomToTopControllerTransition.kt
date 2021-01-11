@@ -3,6 +3,7 @@ package com.onehook.onhooklibrarykotlin.viewcontroller.host.transition
 import android.animation.Animator
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
+import android.graphics.Point
 import com.onehook.onhooklibrarykotlin.viewcontroller.host.ControllerTransition
 
 class BottomToTopControllerTransition : ControllerTransition() {
@@ -16,15 +17,14 @@ class BottomToTopControllerTransition : ControllerTransition() {
         return AnimatorSet().also {
             it.duration = animationDuration
             val animations = arrayListOf<Animator>(
-                ObjectAnimator.ofFloat(context.toController.view, "translationY", frameHeight, 0f),
-                ObjectAnimator.ofFloat(context.cover, "alpha", 0f, if (dim) dimRatio else 0f)
+                ObjectAnimator.ofFloat(context.toController.view, "translationY", 0f),
+                ObjectAnimator.ofFloat(context.cover, "alpha", if (dim) dimRatio else 0f)
             )
             context.fromController?.view?.apply {
                 animations.add(
                     ObjectAnimator.ofFloat(
                         this,
                         "translationY",
-                        0f,
                         -frameHeight * dismissMoveRatio
                     )
                 )
@@ -49,8 +49,8 @@ class BottomToTopControllerTransition : ControllerTransition() {
         return AnimatorSet().also {
             it.duration = animationDuration
             val animations = arrayListOf<Animator>(
-                ObjectAnimator.ofFloat(context.toController.view, "translationY", 0f, frameHeight),
-                ObjectAnimator.ofFloat(context.cover, "alpha", if (dim) dimRatio else 0f, 0f)
+                ObjectAnimator.ofFloat(context.toController.view, "translationY", frameHeight),
+                ObjectAnimator.ofFloat(context.cover, "alpha", 0f)
             )
             context.fromController?.view?.apply {
                 animations.add(
@@ -74,4 +74,23 @@ class BottomToTopControllerTransition : ControllerTransition() {
             view.translationY = context.frame.height().toFloat()
         }
     }
+
+    private fun verticalProgress(context: TransitionContext, start: Point, current: Point): Float =
+        (current.y - start.y) / context.frame.height().toFloat()
+
+    override fun updateInteractiveDismiss(
+        context: TransitionContext,
+        start: Point,
+        current: Point
+    ) {
+        val progress = verticalProgress(context, start, current)
+        context.toController.view.translationY = (current.y - start.y).toFloat()
+        println("XXX progress ${progress}")
+    }
+
+    override fun finishInteractiveDismiss(
+        context: TransitionContext,
+        start: Point,
+        current: Point
+    ): Boolean = verticalProgress(context, start, current) > 0.15
 }

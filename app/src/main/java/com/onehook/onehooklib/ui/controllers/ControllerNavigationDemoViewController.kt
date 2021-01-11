@@ -31,7 +31,7 @@ private class SimpleDemoViewController : BaseViewController() {
     }
 }
 
-private class SimpleDialogViewControllerInteractive : BaseViewController(), ControllerInteractiveGestureDelegate {
+private class SimpleDialogViewControllerInteractive : BaseViewController() {
 
     private lateinit var container: View
     private val content: FrameLayout by lazy {
@@ -59,10 +59,16 @@ private class SimpleDialogViewControllerInteractive : BaseViewController(), Cont
         }
     }
 
-    override fun isTouchOutside(point: Point): Boolean {
-        val rect = Rect()
-        container.getHitRect(rect)
-        return !rect.contains(point)
+    init {
+        interactiveGestureDelegate = object : ControllerInteractiveGestureDelegate {
+            override fun isTouchOutside(point: Point): Boolean {
+                val rect = Rect()
+                container.getHitRect(rect)
+                return !rect.contains(point)
+            }
+
+            override fun canStartInteractiveDismiss(point: Point): Boolean = true
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {

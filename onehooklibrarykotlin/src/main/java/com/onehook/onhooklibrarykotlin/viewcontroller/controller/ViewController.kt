@@ -10,6 +10,7 @@ import com.onehook.onhooklibrarykotlin.app.OHActivity
 import com.onehook.onhooklibrarykotlin.utils.weak
 import com.onehook.onhooklibrarykotlin.view.MATCH_PARENT
 import com.onehook.onhooklibrarykotlin.view.ViewRes
+import com.onehook.onhooklibrarykotlin.viewcontroller.host.ControllerInteractiveGestureDelegate
 import com.onehook.onhooklibrarykotlin.viewcontroller.host.PresentationStyle
 import kotlin.reflect.KMutableProperty
 import kotlin.reflect.full.findAnnotation
@@ -23,6 +24,7 @@ open class ViewController {
     }
 
     var navigationController: NavigationController? by weak()
+    var interactiveGestureDelegate: ControllerInteractiveGestureDelegate? = null
 
     private var _view: View? = null
     val view: View

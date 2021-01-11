@@ -68,6 +68,9 @@ open class ControllerHost(activity: OHActivity) : FrameLayout(activity) {
                 width = LayoutParams.MATCH_PARENT
                 height = LayoutParams.MATCH_PARENT
             }
+            if (it.presentationStyle.transition == null) {
+                it.presentationStyle.transition = BottomToTopControllerTransition()
+            }
             controllers.add(0, it)
             addView(it.view, 0)
             measureChild(viewController.view)
@@ -111,9 +114,10 @@ open class ControllerHost(activity: OHActivity) : FrameLayout(activity) {
         if (!viewController.presentationStyle.overCurrentContext) {
             currentTop?.viewWillDisappear(animated)
         }
-
-        val transition =
-            viewController.presentationStyle.transition ?: BottomToTopControllerTransition()
+        if (viewController.presentationStyle.transition == null) {
+            viewController.presentationStyle.transition = BottomToTopControllerTransition()
+        }
+        val transition = viewController.presentationStyle.transition!!
         val transitionContext = ControllerTransition.TransitionContext(
             fromController = currentTop,
             toController = viewController,
@@ -121,6 +125,7 @@ open class ControllerHost(activity: OHActivity) : FrameLayout(activity) {
             frame = Rect(left, top, right, bottom)
         )
         if (animated) {
+            transition.onExitingAnimationFinished(transitionContext)
             transition.createEnteringAnimation(transitionContext).apply {
                 addListener(object : AnimationEndListener() {
                     override fun onAnimationEnd(animation: Animator?) {
@@ -295,23 +300,18 @@ open class ControllerHost(activity: OHActivity) : FrameLayout(activity) {
         log("===========")
     }
 
-    private var testRect = Rect()
-
     private val detector =
         GestureDetectorCompat(context, object : GestureDetector.SimpleOnGestureListener() {
-            override fun onDown(e: MotionEvent?): Boolean = true
+            override fun onDown(e: MotionEvent?): Boolean = handleInteractiveGesture
             override fun onSingleTapUp(e: MotionEvent?): Boolean {
                 if (e == null) {
                     return false
                 }
+                tempPoint.x = e.x.toInt()
+                tempPoint.y = e.y.toInt()
                 topViewController?.also { currentTop ->
                     if (currentTop.presentationStyle.allowDismissByTapOutside &&
-                        (currentTop as? ControllerInteractiveGestureDelegate)?.isTouchOutside(
-                            Point(
-                                e.x.toInt(),
-                                e.y.toInt()
-                            )
-                        ) == true
+                        currentTop.interactiveGestureDelegate?.isTouchOutside(point = tempPoint) == true
                     ) {
                         pop(animated = true, completion = null)
                     }
@@ -328,37 +328,140 @@ open class ControllerHost(activity: OHActivity) : FrameLayout(activity) {
                 if (e1 == null || e2 == null) {
                     return false
                 }
-                println("XXX on scroll (${e1.x},${e1.y}) (${e2.x},${e2.y}) ${e1.action} ${e2.action} ")
-                val diff = e2.x - e1.x
-                controllers[controllers.size - 2].also {
-                    it.view.visibility = View.VISIBLE
-//                    requestLayout()
-//                    println("XXX should make ${it} visible")
-                }
-                topViewController?.view?.translationX = diff
+                startPoint.x = e1.x.toInt()
+                startPoint.y = e1.y.toInt()
+                currentPoint.x = e2.x.toInt()
+                currentPoint.y = e2.y.toInt()
 
-                return false
+                if (interactiveDismissContext == null) {
+                    startInteractiveDismiss()
+                } else {
+                    onInteractiveDismiss()
+                }
+                return true
             }
         })
+
+    private var tempPoint = Point()
+    private var startPoint = Point()
+    private var currentPoint = Point()
+    private var handleInteractiveGesture: Boolean = false
+    private var interactiveDismissContext: ControllerTransition.TransitionContext? = null
 
     override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
         if (childCount == 0 || ev == null) {
             return false
         }
+
         /* Always dispatch to the top view controller */
         val currentTop = topViewController
         currentTop?.view?.dispatchTouchEvent(ev)
+        /* if top is navigation controller, let it
+           handle interactive gesture
+         */
         if (currentTop is NavigationController) {
             return true
         }
-        detector.onTouchEvent(ev)
+
+        tempPoint.x = ev.x.toInt()
+        tempPoint.y = ev.y.toInt()
+
         when (ev.action) {
-            MotionEvent.ACTION_DOWN -> println("XXX action down")
-            MotionEvent.ACTION_MOVE -> println("XXX action move")
-            MotionEvent.ACTION_CANCEL, MotionEvent.ACTION_UP -> println("XXX action up/cancel")
+            MotionEvent.ACTION_DOWN -> {
+                val isTouchingOutside =
+                    currentTop?.interactiveGestureDelegate?.isTouchOutside(point = tempPoint) == true
+                val canStartInteractiveDismiss =
+                    controllers.size > 1 &&
+                            currentTop?.interactiveGestureDelegate?.canStartInteractiveDismiss(point = tempPoint) == true
+                handleInteractiveGesture = isTouchingOutside || canStartInteractiveDismiss
+                if (handleInteractiveGesture) {
+                    detector.onTouchEvent(ev)
+                }
+            }
+            MotionEvent.ACTION_MOVE -> {
+                if (handleInteractiveGesture) {
+                    detector.onTouchEvent(ev)
+                }
+            }
+            MotionEvent.ACTION_CANCEL, MotionEvent.ACTION_UP -> {
+                if (handleInteractiveGesture) {
+                    detector.onTouchEvent(ev)
+                }
+                if (interactiveDismissContext != null) {
+                    endInteractiveDismiss()
+                }
+                handleInteractiveGesture = false
+            }
         }
         return true
     }
+
+    private fun startInteractiveDismiss() {
+        if (controllers.size <= 1) {
+            return
+        }
+        val fromController = controllers[controllers.size - 2].apply {
+            view.visibility = View.VISIBLE
+        }
+        val cover = dimCovers[dimCovers.size - 1]
+        val toController = controllers[controllers.size - 1]
+
+        ControllerTransition.TransitionContext(
+            fromController = fromController,
+            toController = toController,
+            cover = cover,
+            frame = Rect(left, top, right, bottom)
+        ).also {
+            interactiveDismissContext = it
+            toController.presentationStyle.transition?.updateInteractiveDismiss(
+                context = it,
+                start = startPoint,
+                current = currentPoint
+            )
+        }
+
+    }
+
+    private fun onInteractiveDismiss() {
+        interactiveDismissContext?.also { context ->
+            context.toController.presentationStyle.transition?.updateInteractiveDismiss(
+                context = context,
+                start = startPoint,
+                current = currentPoint
+            )
+        }
+    }
+
+    private fun endInteractiveDismiss() {
+        val fromController = controllers[controllers.size - 2]
+        val toController = controllers[controllers.size - 1]
+
+        interactiveDismissContext?.also { context ->
+            val shouldDismiss =
+                context.toController.presentationStyle.transition?.finishInteractiveDismiss(
+                    context = context,
+                    start = startPoint,
+                    current = currentPoint
+                ) == true
+
+            if (shouldDismiss) {
+                pop(animated = true, completion = null)
+            } else {
+                toController.presentationStyle.transition?.createEnteringAnimation(context)?.apply {
+                    addListener(object : AnimationEndListener() {
+                        override fun onAnimationEnd(animation: Animator?) {
+                            if (toController.presentationStyle.overCurrentContext.not()) {
+                                fromController.view.visibility = View.GONE
+                            }
+                        }
+                    })
+                    start()
+                }
+            }
+        }
+        interactiveDismissContext = null
+    }
+
 }
 
 /**
@@ -382,5 +485,5 @@ private class DimView(context: Context) : View(context) {
 }
 
 private fun log(vararg args: Any) {
-    Log.d("oneHook XXX", args.joinToString(" "))
+    Log.d("oneHook", args.joinToString(" "))
 }
