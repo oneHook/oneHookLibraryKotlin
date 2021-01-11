@@ -92,6 +92,12 @@ class MenuViewController : LinearRecyclerViewController() {
                 subtitle = null,
                 action = { StackLayoutDemoViewController() })
         )
+        items.add(
+            MenuItem(
+                title = "Line Graph View",
+                subtitle = null,
+                action = { LineGraphDemoViewController() })
+        )
 
         items.add(Section(title = "Navigation"))
         for (i in 0..20) {

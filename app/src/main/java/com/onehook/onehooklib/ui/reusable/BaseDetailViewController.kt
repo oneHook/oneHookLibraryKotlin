@@ -32,7 +32,7 @@ abstract class BaseDetailViewController : ViewController() {
 
     lateinit var _contentView: View
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
+    final override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
         return FrameLayout(container.context).also {
             (it as? ViewGroup)?.apply {
                 _contentView = onCreateContentView(inflater = inflater, container = container)
@@ -40,6 +40,11 @@ abstract class BaseDetailViewController : ViewController() {
                 addView(toolbar)
             }
         }
+    }
+
+    override fun viewDidLoad(view: View) {
+        super.viewDidLoad(view)
+        view.setBackgroundColor(Color.WHITE)
     }
 
     abstract fun onCreateContentView(inflater: LayoutInflater, container: ViewGroup): View
