@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import androidx.appcompat.widget.LinearLayoutCompat
 import com.onehook.onehooklib.ui.reusable.BaseDetailViewController
 import com.onehook.onehooklib.ui.reusable.RoundedSolidButton
 import com.onehook.onhooklibrarykotlin.utils.dp
@@ -64,6 +63,7 @@ class LineGraphDemoViewController : BaseDetailViewController() {
 
     override fun viewDidLoad(view: View) {
         super.viewDidLoad(view)
+        toolbar.title.getOrBuild().text = "Line Graph Demo"
         randomGraph(animated = false)
     }
 
