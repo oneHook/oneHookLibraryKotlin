@@ -1,10 +1,15 @@
 package com.onehook.onhooklibrarykotlin.viewcontroller.controller
 
 import android.graphics.Color
+import android.graphics.Point
+import android.graphics.Rect
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.graphics.contains
+import com.onehook.onhooklibrarykotlin.utils.dp
 import com.onehook.onhooklibrarykotlin.viewcontroller.host.ControllerHost
+import com.onehook.onhooklibrarykotlin.viewcontroller.host.ControllerInteractiveGestureDelegate
 import com.onehook.onhooklibrarykotlin.viewcontroller.host.transition.LeftToRightControllerTransition
 
 open class NavigationController(var root: ViewController) : ViewController() {
@@ -51,7 +56,13 @@ open class NavigationController(var root: ViewController) : ViewController() {
     fun push(viewController: ViewController, animated: Boolean, completion: (() -> Unit)? = null) {
         view.post {
             viewController.navigationController = this
-            viewController.presentationStyle.transition = viewController.presentationStyle.transition ?: LeftToRightControllerTransition()
+            viewController.presentationStyle.transition =
+                viewController.presentationStyle.transition ?: LeftToRightControllerTransition()
+            viewController.interactiveGestureDelegate = object :
+                ControllerInteractiveGestureDelegate {
+                override fun isTouchOutside(point: Point): Boolean = false
+                override fun canStartInteractiveDismiss(point: Point): Boolean = point.x < dp(50)
+            }
             controllerHost?.push(
                 viewController = viewController,
                 activity = activity,
