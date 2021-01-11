@@ -5,18 +5,22 @@ import android.animation.AnimatorSet
 import android.graphics.Color
 import android.graphics.Rect
 import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.onehook.onehooklib.ui.reusable.BaseViewController
+import com.onehook.onehooklib.ui.reusable.BaseDetailViewController
 import com.onehook.onehooklib.ui.reusable.LargeTextView
 import com.onehook.onehooklib.ui.reusable.RoundedSolidButton
 import com.onehook.onhooklibrarykotlin.animation.frameAnimation
 import com.onehook.onhooklibrarykotlin.utils.dp
 import com.onehook.onhooklibrarykotlin.view.EXACTLY
+import com.onehook.onhooklibrarykotlin.view.LP
+import com.onehook.onhooklibrarykotlin.view.MATCH_PARENT
 import com.onehook.onhooklibrarykotlin.view.setFrame
+import com.onehook.onhooklibrarykotlin.viewcontroller.controller.EDView
 import kotlin.random.Random
 
-class ViewInflateByManualCodeDemoViewController : BaseViewController() {
+class ViewInflateByManualCodeDemoViewController : BaseDetailViewController() {
 
     private val view1: LargeTextView by lazy {
         LargeTextView(context).apply {
@@ -46,9 +50,19 @@ class ViewInflateByManualCodeDemoViewController : BaseViewController() {
         }
     }
 
+    override fun onCreateContentView(inflater: LayoutInflater, container: ViewGroup): View {
+        return EDView(this).apply {
+            layoutParams = LP().apply {
+                width = MATCH_PARENT
+                height = MATCH_PARENT
+            }.frameLayoutLp()
+        }
+    }
+
     override fun viewDidLoad(view: View) {
         super.viewDidLoad(view)
-        (view as? ViewGroup)?.apply {
+        toolbar.title.getOrBuild().text = "Create View By Manual Layout"
+        (_contentView as? ViewGroup)?.apply {
             setBackgroundColor(Color.WHITE)
             addView(view1)
             addView(view2)
@@ -79,10 +93,10 @@ class ViewInflateByManualCodeDemoViewController : BaseViewController() {
         views.forEach { child ->
             val x = Random.nextInt(0, view.width / 2)
             val y = Random.nextInt(0, view.height / 2)
-            val width = child.measuredWidth
-            val height = child.measuredHeight
-//            val width = Random.nextInt(dp(50), dp(300))
-//            val height = Random.nextInt(dp(50), dp(300))
+//            val width = child.measuredWidth
+//            val height = child.measuredHeight
+            val width = Random.nextInt(dp(50), dp(300))
+            val height = Random.nextInt(dp(50), dp(300))
             animations.add(child.frameAnimation(Rect(x, y, x + width, y + height)))
         }
         val aset = AnimatorSet()

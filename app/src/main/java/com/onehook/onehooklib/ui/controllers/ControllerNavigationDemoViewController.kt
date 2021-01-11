@@ -9,7 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.core.graphics.contains
-import com.onehook.onehooklib.ui.reusable.BaseViewController
+import com.onehook.onehooklib.ui.reusable.BaseDetailViewController
 import com.onehook.onehooklib.ui.reusable.LargeTextView
 import com.onehook.onehooklib.ui.reusable.RoundedSolidButton
 import com.onehook.onhooklibrarykotlin.utils.dp
@@ -17,6 +17,7 @@ import com.onehook.onhooklibrarykotlin.utils.dpf
 import com.onehook.onhooklibrarykotlin.view.LP
 import com.onehook.onhooklibrarykotlin.view.MATCH_PARENT
 import com.onehook.onhooklibrarykotlin.viewcontroller.controller.EDView
+import com.onehook.onhooklibrarykotlin.viewcontroller.controller.ViewController
 import com.onehook.onhooklibrarykotlin.viewcontroller.host.ControllerInteractiveGestureDelegate
 import com.onehook.onhooklibrarykotlin.viewcontroller.host.PresentationStyle
 import com.onehook.onhooklibrarykotlin.viewcontroller.host.transition.BottomToTopControllerTransition
@@ -24,7 +25,7 @@ import com.onehook.onhooklibrarykotlin.viewcontroller.host.transition.FadeContro
 import com.onehook.onhooklibrarykotlin.viewcontroller.host.transition.LeftToRightControllerTransition
 import com.onehook.onhooklibrarykotlin.widget.StackLayout
 
-class ControllerNavigationDemoViewController : BaseViewController() {
+class ControllerNavigationDemoViewController : BaseDetailViewController() {
     private val contentView: ViewGroup by lazy {
         StackLayout(context).apply {
             setBackgroundColor(Color.WHITE)
@@ -153,12 +154,17 @@ class ControllerNavigationDemoViewController : BaseViewController() {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
+    override fun onCreateContentView(inflater: LayoutInflater, container: ViewGroup): View {
         return contentView
+    }
+
+    override fun viewDidLoad(view: View) {
+        super.viewDidLoad(view)
+        toolbar.title.getOrBuild().text = "Navigation Demo"
     }
 }
 
-private class SimpleDemoViewController : BaseViewController() {
+private class SimpleDemoViewController : ViewController() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
         return EDView(this).apply {
             setBackgroundColor(Color.BLUE)
@@ -166,7 +172,7 @@ private class SimpleDemoViewController : BaseViewController() {
     }
 }
 
-private class SimpleDialogViewControllerInteractive : BaseViewController() {
+private class SimpleDialogViewControllerInteractive : ViewController() {
 
     private lateinit var container: View
     private val content: FrameLayout by lazy {
@@ -211,7 +217,7 @@ private class SimpleDialogViewControllerInteractive : BaseViewController() {
     }
 }
 
-private class SimpleOverlayViewControllerInteractive : BaseViewController() {
+private class SimpleOverlayViewControllerInteractive : ViewController() {
 
     private lateinit var container: View
     private val content: FrameLayout by lazy {

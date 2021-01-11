@@ -10,14 +10,14 @@ import android.widget.LinearLayout
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.view.setPadding
-import com.onehook.onehooklib.ui.reusable.BaseViewController
+import com.onehook.onehooklib.ui.reusable.BaseDetailViewController
 import com.onehook.onehooklib.ui.reusable.LargeTextView
 import com.onehook.onhooklibrarykotlin.graphics.DrawableFactory
 import com.onehook.onhooklibrarykotlin.utils.dp
 import com.onehook.onhooklibrarykotlin.view.LP
 import com.onehook.onhooklibrarykotlin.view.MATCH_PARENT
 
-class ViewInflateByCodeDemoViewController : BaseViewController() {
+class ViewInflateByCodeDemoViewController : BaseDetailViewController() {
 
     private val contentView: ViewGroup by lazy {
         FrameLayout(context).apply {
@@ -73,11 +73,12 @@ class ViewInflateByCodeDemoViewController : BaseViewController() {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
+    override fun onCreateContentView(inflater: LayoutInflater, container: ViewGroup): View {
         return contentView
     }
 
     override fun viewDidLoad(view: View) {
         super.viewDidLoad(view)
+        toolbar.title.getOrBuild().text = "Create View by Code"
     }
 }
