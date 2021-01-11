@@ -86,7 +86,9 @@ class LeftToRightControllerTransition : ControllerTransition() {
         val progress = horizontalProgress(context, start, current)
         context.toController.view.translationX = (current.x - start.x).toFloat()
         context.fromController?.view?.translationX = -context.frame.width() * dismissMoveRatio * (1 - progress)
-        context.cover.alpha = (1 - progress) * dimRatio
+        if (dim) {
+            context.cover.alpha = (1 - progress) * dimRatio
+        }
     }
 
     override fun finishInteractiveDismiss(
