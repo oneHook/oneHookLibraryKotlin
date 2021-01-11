@@ -3,6 +3,7 @@ package com.onehook.onehooklib.ui.dashboard
 import android.content.Context
 import android.graphics.Color
 import android.graphics.Rect
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
@@ -12,11 +13,13 @@ import com.onehook.onehooklib.ui.reusable.LargeTextView
 import com.onehook.onehooklib.ui.reusable.MediumTextView
 import com.onehook.onhooklibrarykotlin.graphics.DrawableFactory
 import com.onehook.onhooklibrarykotlin.utils.dp
+import com.onehook.onhooklibrarykotlin.utils.dpf
 import com.onehook.onhooklibrarykotlin.view.LP
 import com.onehook.onhooklibrarykotlin.view.MATCH_PARENT
 import com.onehook.onhooklibrarykotlin.viewcontroller.controller.LinearRecyclerViewController
 import com.onehook.onhooklibrarykotlin.viewcontroller.controller.SimpleAdapter
 import com.onehook.onhooklibrarykotlin.viewcontroller.controller.ViewController
+import com.onehook.onhooklibrarykotlin.widget.Toolbar
 
 private interface Item
 private data class Section(val title: String) : Item
@@ -91,12 +94,33 @@ class MenuViewController : LinearRecyclerViewController() {
         )
 
         items.add(Section(title = "Navigation"))
-        items.add(
-            MenuItem(
-                title = "Navigation Demo",
-                subtitle = null,
-                action = { ControllerNavigationDemoViewController() })
-        )
+        for (i in 0..20) {
+            items.add(
+                MenuItem(
+                    title = "Navigation Demo",
+                    subtitle = null,
+                    action = { ControllerNavigationDemoViewController() })
+            )
+        }
+    }
+
+    private val toolbar: Toolbar by lazy {
+        Toolbar(context = context).apply {
+            layoutParams = LP().apply {
+                width = MATCH_PARENT
+                height = activity.safeArea.top + dp(56)
+            }.frameLayoutLp()
+            setPadding(0, activity.safeArea.top, 0, 0)
+            title.getOrBuild().text = "oneHook Library"
+            setBackgroundColor(Color.parseColor("#BBFFFFFF"))
+            elevation = dpf(8)
+        }
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
+        return super.onCreateView(inflater, container).also {
+            (it as? ViewGroup)?.addView(toolbar)
+        }
     }
 
     override fun viewDidLoad(view: View) {
@@ -112,7 +136,7 @@ class MenuViewController : LinearRecyclerViewController() {
             ) {
                 when (parent.getChildAdapterPosition(view)) {
                     0 -> {
-                        outRect.set(0, activity.safeArea.top, 0, 0)
+                        outRect.set(0, activity.safeArea.top + dp(56), 0, 0)
                     }
                     items.size - 1 -> {
                         outRect.set(0, 0, 0, activity.safeArea.bottom)
@@ -159,13 +183,5 @@ class MenuViewController : LinearRecyclerViewController() {
                 return items.size
             }
         }
-    }
-
-    override fun viewDidAppear(animated: Boolean) {
-        super.viewDidAppear(animated)
-    }
-
-    override fun viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
     }
 }
