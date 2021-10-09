@@ -4,7 +4,7 @@ import android.app.Activity
 import android.graphics.Rect
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import com.jakewharton.rxrelay2.BehaviorRelay
+import com.jakewharton.rxrelay3.BehaviorRelay
 
 
 class KeyboardObserver(activity: AppCompatActivity) {

@@ -11,7 +11,7 @@ import com.onehook.onhooklibrarykotlin.view.LP
 import com.onehook.onhooklibrarykotlin.view.MATCH_PARENT
 import com.onehook.onhooklibrarykotlin.viewcontroller.controller.ViewController
 import com.onehook.onhooklibrarykotlin.widget.Toolbar
-import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 
 abstract class BaseDetailViewController : ViewController() {
 
